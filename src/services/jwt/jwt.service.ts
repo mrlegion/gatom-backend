@@ -1,11 +1,10 @@
 import { TStringValue } from '@alexdevco/common'
-import { Global, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService as JWT } from '@nestjs/jwt'
 
 import { IJwtPayload } from '../../shared/types'
 
-@Global()
 @Injectable()
 export class JwtService {
 	private readonly secret: string

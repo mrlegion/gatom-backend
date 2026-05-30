@@ -7,3 +7,55 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model User {
+  id String @id @default(nanoid())
+
+  username         String   @unique
+  email            String   @unique
+  passwordHash     String   @map("password_hash")
+  passwordChangeAt DateTime @map("password_change_at") @default(now())
+
+  firstName  String  @map("first_name")
+  lastName   String  @map("last_name")
+  middleName String? @map("middle_name")
+  avatar     String  @default("/images/profile/default-user.svg")
+
+  role Role @default(USER)
+
+  isActive       Boolean @default(true)
+  isInitial      Boolean @default(true) @map("is_initial")
+  isUseTwoFactor Boolean @default(false) @map("is_use_two_factor")
+
+  passwordHistory UserPasswordHistory[]
+
+  lastLogin DateTime @map("last_login")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model UserPasswordHistory {
+  id String @id @default(nanoid())
+
+  email    String
+  password String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("user_password_histories")
+}
+
+enum Role {
+  USER
+  DEVELOPER
+  CONSULTANT
+  ADMIN
+
+  @@map("roles")
+}

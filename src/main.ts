@@ -5,9 +5,11 @@ import { SwaggerModule } from '@nestjs/swagger'
 import cookieParser from 'cookie-parser'
 
 import { AppModule } from './app.module'
-import { getCorsConfig } from './config/bootstraps/cors.bootstrap'
-import { getSwaggerConfig } from './config/bootstraps/swagger.bootstrap'
-import { getValidationPipeConfig } from './config/bootstraps/validation-pipe.bootstrap'
+import {
+	getCorsConfig,
+	getSwaggerConfig,
+	getValidationPipeConfig
+} from './config'
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
