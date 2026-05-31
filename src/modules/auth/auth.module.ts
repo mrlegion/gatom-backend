@@ -7,6 +7,7 @@ import { JwtStrategy } from '../../config/strategies/jwt.strategy'
 import {
 	EmployeeRepository,
 	PasswordHistoryRepository,
+	PositionRepository,
 	UserRepository
 } from '../../repositories'
 import { PrismaService } from '../../services'
@@ -28,6 +29,7 @@ import { AuthService } from './auth.service'
 		AuthService,
 		UserRepository,
 		EmployeeRepository,
+		PositionRepository,
 		PrismaService,
 		PasswordHistoryRepository,
 		JwtStrategy

@@ -16,6 +16,7 @@ import { Role, User } from '../../../prisma/generated/client'
 import {
 	EmployeeRepository,
 	PasswordHistoryRepository,
+	PositionRepository,
 	UserRepository
 } from '../../repositories'
 import { IJwtPayload, ITokens } from '../../shared/types'
@@ -42,6 +43,7 @@ export class AuthService {
 		private readonly userRepository: UserRepository,
 		private readonly passwordHistoryRepository: PasswordHistoryRepository,
 		private readonly employeeRepository: EmployeeRepository,
+		private readonly positionRepository: PositionRepository,
 		private readonly jwt: JwtService,
 		private readonly config: ConfigService
 	) {
@@ -134,6 +136,11 @@ export class AuthService {
 			throw new BadRequestException(
 				`Сотрудник с именем пользователя ${username} уже существует`
 			)
+
+		const isPositionExist =
+			await this.positionRepository.findById(positionId)
+		if (!isPositionExist)
+			throw new NotFoundException('Должность не найдена')
 
 		const { password, firstName, lastName, middleName, role } = data
 
