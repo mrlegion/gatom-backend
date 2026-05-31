@@ -3,6 +3,7 @@ import {
 	BadRequestException,
 	Injectable,
 	InternalServerErrorException,
+	Logger,
 	NotFoundException,
 	UnauthorizedException
 } from '@nestjs/common'
@@ -12,11 +13,12 @@ import { hash, verify } from 'argon2'
 import { Request, Response } from 'express'
 
 import { User } from '../../../prisma/generated/client'
-import { UserRepository } from '../../repositories'
+import { PasswordHistoryRepository, UserRepository } from '../../repositories'
 import { IJwtPayload } from '../../shared/types'
 import { omit } from '../../shared/utils'
 
 import {
+	ChangePasswordRequest,
 	LoginRequest,
 	LoginResponse,
 	RefreshResponse,
@@ -30,8 +32,11 @@ export class AuthService {
 	private readonly ACCESS_TOKEN_EXPIRES: TStringValue
 	private readonly REFRESH_TOKEN_EXPIRES: TStringValue
 
+	private readonly _logger: Logger
+
 	public constructor(
 		private readonly userRepository: UserRepository,
+		private readonly passwordHistoryRepository: PasswordHistoryRepository,
 		private readonly jwt: JwtService,
 		private readonly config: ConfigService
 	) {
@@ -41,6 +46,8 @@ export class AuthService {
 		this.ACCESS_TOKEN_EXPIRES = this.config.getOrThrow<TStringValue>(
 			'JWT_ACCESS_EXPIRES_IN'
 		)
+
+		this._logger = new Logger(AuthService.name)
 	}
 
 	/**
@@ -131,13 +138,27 @@ export class AuthService {
 				passwordHash: await hash(password),
 				lastLogin: new Date(Date.now()).toISOString()
 			})
+
+			if (user) {
+				await this.passwordHistoryRepository.create({
+					email: user.email,
+					password: user.passwordHash,
+					user: {
+						connect: {
+							id: user.id
+						}
+					}
+				})
+			}
 		} catch (e) {
+			this._logger.error('Не удалось создать пользователя', data)
 			throw new InternalServerErrorException(
 				'Ошибка при создании записи о новом пользователе'
 			)
 		}
 
 		if (!user) {
+			this._logger.error('Не удалось создать пользователя', data)
 			throw new InternalServerErrorException(
 				'Ошибка при создании записи о новом пользователе'
 			)
@@ -205,6 +226,72 @@ export class AuthService {
 				'lastLogin'
 			]),
 			accessToken: response.accessToken
+		}
+	}
+
+	/**
+	 * Обновление пароля пользователя
+	 *
+	 * @param userId - Уникальный идентификатор пользователя
+	 * @param data - Данные, для обновления пароля (см. {@link ChangePasswordRequest})
+	 *
+	 * @returns Ответ, об успешности выполнения смены пароля пользователя (boolean)
+	 */
+	public async changePassword(userId: string, data: ChangePasswordRequest) {
+		const user = await this.userRepository.findById(userId)
+		if (!user) {
+			this._logger.error('Не верный ID пользователя')
+			throw new UnauthorizedException(
+				'Ошибка обновления пароля пользователя'
+			)
+		}
+
+		const { oldPassword, newPassword } = data
+
+		const isPasswordValid = await verify(user.passwordHash, oldPassword)
+		if (!isPasswordValid) {
+			this._logger.error(
+				`У пользователя ${user.id} переданный пароль не совпадает с паролем в БД`
+			)
+			throw new BadRequestException('Не верный пароль')
+		}
+
+		const passwords = await this.passwordHistoryRepository.findByUser(
+			user.id,
+			10
+		)
+
+		if (passwords && passwords.length > 0) {
+			for (const record of passwords) {
+				const isValid = await verify(record.password, newPassword)
+				if (isValid)
+					throw new BadRequestException(
+						'Пароль уже использовался ранее'
+					)
+			}
+		}
+
+		try {
+			const newPasswordHash = await hash(newPassword)
+
+			await this.userRepository.update(user.id, {
+				passwordChangeAt: Date.now().toString(),
+				passwordHash: newPasswordHash
+			})
+
+			await this.passwordHistoryRepository.create({
+				email: user.email,
+				password: newPasswordHash,
+				user: {
+					connect: {
+						id: user.id
+					}
+				}
+			})
+
+			return true
+		} catch {
+			return false
 		}
 	}
 

@@ -1,6 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger'
 
-import type { IUserResponse } from '../../../../shared/types'
+import {
+	type IUserResponse,
+	TokenExampleFactory,
+	UserExampleFactory
+} from '../../../../shared/types'
 
 export class RegisterResponse {
 	@ApiProperty({
@@ -10,13 +14,14 @@ export class RegisterResponse {
 	public success: boolean
 
 	@ApiProperty({
-		title: 'Данные пользователя'
+		title: 'Данные пользователя',
+		example: UserExampleFactory.responseUser()
 	})
 	public user: IUserResponse
 
 	@ApiProperty({
 		title: 'Токен доступа',
-		example: 'your-secret-token'
+		example: TokenExampleFactory.accessToken()
 	})
 	public accessToken: string
 }

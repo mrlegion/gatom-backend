@@ -8,7 +8,7 @@ import { IJwtPayload } from '../../shared/types'
 import { pick } from '../../shared/utils'
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
 	public constructor(
 		private config: ConfigService,
 		private userRepository: UserRepository

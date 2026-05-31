@@ -7,13 +7,26 @@ import {
 	Req,
 	Res
 } from '@nestjs/common'
-import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger'
+import {
+	ApiBearerAuth,
+	ApiBody,
+	ApiOperation,
+	ApiResponse
+} from '@nestjs/swagger'
 import type { Request, Response } from 'express'
 
+import { Auth } from '../../shared/decorators'
+import { CurrentUser } from '../../shared/decorators/current-user.decorator'
 import { ErrorResponse } from '../../shared/response'
+import {
+	ErrorExampleFactory,
+	IUserResponse,
+	UserExampleFactory
+} from '../../shared/types'
 
 import { AuthService } from './auth.service'
 import {
+	ChangePasswordRequest,
 	LoginRequest,
 	LoginResponse,
 	RefreshResponse,
@@ -30,9 +43,8 @@ export class AuthController {
 	 *
 	 * @param res - Запрос пользователя (см. {@link Response})
 	 * @param data - Данные для аутентификации, включая email и пароль (см. {@link LoginRequest})
+	 *
 	 * @returns Возвращает токен доступа и информацию о пользователе (см. {@link LoginResponse})
-	 * @throws {NotFoundException} Если пользователь с указанным email не найден
-	 * @throws {BadRequestException} Если переданы некорректные данные (например, неверный пароль)
 	 */
 	@ApiOperation({
 		summary: 'Выполняет вход пользователя в систему'
@@ -43,11 +55,13 @@ export class AuthController {
 	})
 	@ApiResponse({
 		status: HttpStatus.BAD_REQUEST,
-		type: ErrorResponse
+		type: ErrorResponse,
+		example: ErrorExampleFactory.badRequest()
 	})
 	@ApiResponse({
 		status: HttpStatus.NOT_FOUND,
-		type: ErrorResponse
+		type: ErrorResponse,
+		example: ErrorExampleFactory.notFound()
 	})
 	@ApiBody({ type: LoginRequest })
 	@Post('/login')
@@ -64,8 +78,8 @@ export class AuthController {
 	 *
 	 * @param res - Запрос пользователя (см. {@link Response})
 	 * @param data - Данные для регистрации нового пользователя (см. {@link RegisterRequest})
+	 *
 	 * @returns Возвращает статус выполнения операции (см. {@link RegisterResponse})
-	 * @throws {BadRequestException} Если переданы некорректные данные
 	 */
 	@ApiOperation({
 		summary: 'Регистрация в системе'
@@ -76,9 +90,17 @@ export class AuthController {
 	})
 	@ApiResponse({
 		status: HttpStatus.BAD_REQUEST,
-		type: ErrorResponse
+		type: ErrorResponse,
+		example: ErrorExampleFactory.badRequest()
 	})
-	@ApiBody({ type: RegisterRequest })
+	@ApiBody({
+		type: RegisterRequest,
+		examples: {
+			'Регистрация пользователя в системе': {
+				value: UserExampleFactory.register()
+			}
+		}
+	})
 	@Post('/register')
 	@HttpCode(HttpStatus.OK)
 	public async register(
@@ -105,8 +127,10 @@ export class AuthController {
 	})
 	@ApiResponse({
 		status: HttpStatus.UNAUTHORIZED,
-		type: ErrorResponse
+		type: ErrorResponse,
+		example: ErrorExampleFactory.unauthorized()
 	})
+	@ApiBearerAuth()
 	@Post('/refresh')
 	@HttpCode(HttpStatus.OK)
 	public async refresh(
@@ -132,5 +156,53 @@ export class AuthController {
 		@Res({ passthrough: true }) res: Response
 	): Promise<boolean> {
 		return this.authService.logout(res)
+	}
+
+	/**
+	 * Смена пароля пользователя
+	 *
+	 * @param userId - Уникальный идентификатор пользователя
+	 * @param data - Данные для обновления пароля (см. {@link ChangePasswordRequest})
+	 *
+	 * @returns Ответ, об успешности выполнения смены пароля пользователя (boolean)
+	 */
+	@ApiOperation({
+		summary: 'Смена пароля пользователя'
+	})
+	@ApiBody({ type: ChangePasswordRequest })
+	@ApiBearerAuth()
+	@ApiResponse({
+		status: HttpStatus.OK,
+		type: Boolean,
+		description:
+			'Ответ, об успешности выполнения смены пароля пользователя',
+		example: true
+	})
+	@ApiResponse({
+		status: HttpStatus.BAD_REQUEST,
+		type: ErrorResponse,
+		description: 'Не верный пароль пользователя',
+		example: ErrorExampleFactory.badRequest()
+	})
+	@ApiResponse({
+		status: HttpStatus.BAD_REQUEST,
+		type: ErrorResponse,
+		description: 'Пароль уже использовался ранее',
+		example: ErrorExampleFactory.badRequest()
+	})
+	@ApiResponse({
+		status: HttpStatus.UNAUTHORIZED,
+		type: ErrorResponse,
+		description: 'Ошибка обновления пароля пользователя',
+		example: ErrorExampleFactory.unauthorized()
+	})
+	@Auth()
+	@Post('/update-password')
+	@HttpCode(HttpStatus.OK)
+	public async changePassword(
+		@CurrentUser('id') userId: string,
+		@Body() data: ChangePasswordRequest
+	) {
+		return this.authService.changePassword(userId, data)
 	}
 }
