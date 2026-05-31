@@ -52,7 +52,11 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  UserPasswordHistory: 'UserPasswordHistory'
+  UserPasswordHistory: 'UserPasswordHistory',
+  Employee: 'Employee',
+  Organization: 'Organization',
+  Subsidiary: 'Subsidiary',
+  Position: 'Position'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -73,15 +77,9 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const UserScalarFieldEnum = {
   id: 'id',
-  username: 'username',
   email: 'email',
   passwordHash: 'passwordHash',
   passwordChangeAt: 'passwordChangeAt',
-  firstName: 'firstName',
-  lastName: 'lastName',
-  middleName: 'middleName',
-  avatar: 'avatar',
-  role: 'role',
   isActive: 'isActive',
   isInitial: 'isInitial',
   isUseTwoFactor: 'isUseTwoFactor',
@@ -102,6 +100,64 @@ export const UserPasswordHistoryScalarFieldEnum = {
 } as const
 
 export type UserPasswordHistoryScalarFieldEnum = (typeof UserPasswordHistoryScalarFieldEnum)[keyof typeof UserPasswordHistoryScalarFieldEnum]
+
+
+export const EmployeeScalarFieldEnum = {
+  id: 'id',
+  username: 'username',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  middleName: 'middleName',
+  avatar: 'avatar',
+  role: 'role',
+  positionId: 'positionId',
+  userId: 'userId',
+  subsidiaryId: 'subsidiaryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
+
+
+export const OrganizationScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  shortTitle: 'shortTitle',
+  ogrn: 'ogrn',
+  inn: 'inn',
+  kpp: 'kpp',
+  oktmo: 'oktmo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
+
+
+export const SubsidiaryScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  address: 'address',
+  phones: 'phones',
+  emails: 'emails',
+  organizationId: 'organizationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SubsidiaryScalarFieldEnum = (typeof SubsidiaryScalarFieldEnum)[keyof typeof SubsidiaryScalarFieldEnum]
+
+
+export const PositionScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  isNonActive: 'isNonActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PositionScalarFieldEnum = (typeof PositionScalarFieldEnum)[keyof typeof PositionScalarFieldEnum]
 
 
 export const SortOrder = {

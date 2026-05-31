@@ -10,4 +10,8 @@
  */
 export type * from './models/User.js'
 export type * from './models/UserPasswordHistory.js'
+export type * from './models/Employee.js'
+export type * from './models/Organization.js'
+export type * from './models/Subsidiary.js'
+export type * from './models/Position.js'
 export type * from './commonInputTypes.js'

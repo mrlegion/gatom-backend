@@ -27,3 +27,23 @@ export type User = Prisma.UserModel
  * 
  */
 export type UserPasswordHistory = Prisma.UserPasswordHistoryModel
+/**
+ * Model Employee
+ * 
+ */
+export type Employee = Prisma.EmployeeModel
+/**
+ * Model Organization
+ * 
+ */
+export type Organization = Prisma.OrganizationModel
+/**
+ * Model Subsidiary
+ * 
+ */
+export type Subsidiary = Prisma.SubsidiaryModel
+/**
+ * Model Position
+ * 
+ */
+export type Position = Prisma.PositionModel

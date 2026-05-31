@@ -26,15 +26,9 @@ export type AggregateUser = {
 
 export type UserMinAggregateOutputType = {
   id: string | null
-  username: string | null
   email: string | null
   passwordHash: string | null
   passwordChangeAt: Date | null
-  firstName: string | null
-  lastName: string | null
-  middleName: string | null
-  avatar: string | null
-  role: $Enums.Role | null
   isActive: boolean | null
   isInitial: boolean | null
   isUseTwoFactor: boolean | null
@@ -45,15 +39,9 @@ export type UserMinAggregateOutputType = {
 
 export type UserMaxAggregateOutputType = {
   id: string | null
-  username: string | null
   email: string | null
   passwordHash: string | null
   passwordChangeAt: Date | null
-  firstName: string | null
-  lastName: string | null
-  middleName: string | null
-  avatar: string | null
-  role: $Enums.Role | null
   isActive: boolean | null
   isInitial: boolean | null
   isUseTwoFactor: boolean | null
@@ -64,15 +52,9 @@ export type UserMaxAggregateOutputType = {
 
 export type UserCountAggregateOutputType = {
   id: number
-  username: number
   email: number
   passwordHash: number
   passwordChangeAt: number
-  firstName: number
-  lastName: number
-  middleName: number
-  avatar: number
-  role: number
   isActive: number
   isInitial: number
   isUseTwoFactor: number
@@ -85,15 +67,9 @@ export type UserCountAggregateOutputType = {
 
 export type UserMinAggregateInputType = {
   id?: true
-  username?: true
   email?: true
   passwordHash?: true
   passwordChangeAt?: true
-  firstName?: true
-  lastName?: true
-  middleName?: true
-  avatar?: true
-  role?: true
   isActive?: true
   isInitial?: true
   isUseTwoFactor?: true
@@ -104,15 +80,9 @@ export type UserMinAggregateInputType = {
 
 export type UserMaxAggregateInputType = {
   id?: true
-  username?: true
   email?: true
   passwordHash?: true
   passwordChangeAt?: true
-  firstName?: true
-  lastName?: true
-  middleName?: true
-  avatar?: true
-  role?: true
   isActive?: true
   isInitial?: true
   isUseTwoFactor?: true
@@ -123,15 +93,9 @@ export type UserMaxAggregateInputType = {
 
 export type UserCountAggregateInputType = {
   id?: true
-  username?: true
   email?: true
   passwordHash?: true
   passwordChangeAt?: true
-  firstName?: true
-  lastName?: true
-  middleName?: true
-  avatar?: true
-  role?: true
   isActive?: true
   isInitial?: true
   isUseTwoFactor?: true
@@ -215,15 +179,9 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type UserGroupByOutputType = {
   id: string
-  username: string
   email: string
   passwordHash: string
   passwordChangeAt: Date
-  firstName: string
-  lastName: string
-  middleName: string | null
-  avatar: string
-  role: $Enums.Role
   isActive: boolean
   isInitial: boolean
   isUseTwoFactor: boolean
@@ -255,15 +213,9 @@ export type UserWhereInput = {
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
-  username?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
   passwordChangeAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  firstName?: Prisma.StringFilter<"User"> | string
-  lastName?: Prisma.StringFilter<"User"> | string
-  middleName?: Prisma.StringNullableFilter<"User"> | string | null
-  avatar?: Prisma.StringFilter<"User"> | string
-  role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   isActive?: Prisma.BoolFilter<"User"> | boolean
   isInitial?: Prisma.BoolFilter<"User"> | boolean
   isUseTwoFactor?: Prisma.BoolFilter<"User"> | boolean
@@ -271,19 +223,14 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   passwordHistory?: Prisma.UserPasswordHistoryListRelationFilter
+  employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  username?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   passwordChangeAt?: Prisma.SortOrder
-  firstName?: Prisma.SortOrder
-  lastName?: Prisma.SortOrder
-  middleName?: Prisma.SortOrderInput | Prisma.SortOrder
-  avatar?: Prisma.SortOrder
-  role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isInitial?: Prisma.SortOrder
   isUseTwoFactor?: Prisma.SortOrder
@@ -291,22 +238,17 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   passwordHistory?: Prisma.UserPasswordHistoryOrderByRelationAggregateInput
+  employee?: Prisma.EmployeeOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  username?: string
   email?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   passwordHash?: Prisma.StringFilter<"User"> | string
   passwordChangeAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  firstName?: Prisma.StringFilter<"User"> | string
-  lastName?: Prisma.StringFilter<"User"> | string
-  middleName?: Prisma.StringNullableFilter<"User"> | string | null
-  avatar?: Prisma.StringFilter<"User"> | string
-  role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   isActive?: Prisma.BoolFilter<"User"> | boolean
   isInitial?: Prisma.BoolFilter<"User"> | boolean
   isUseTwoFactor?: Prisma.BoolFilter<"User"> | boolean
@@ -314,19 +256,14 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   passwordHistory?: Prisma.UserPasswordHistoryListRelationFilter
-}, "id" | "username" | "email">
+  employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
+}, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  username?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   passwordChangeAt?: Prisma.SortOrder
-  firstName?: Prisma.SortOrder
-  lastName?: Prisma.SortOrder
-  middleName?: Prisma.SortOrderInput | Prisma.SortOrder
-  avatar?: Prisma.SortOrder
-  role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isInitial?: Prisma.SortOrder
   isUseTwoFactor?: Prisma.SortOrder
@@ -343,15 +280,9 @@ export type UserScalarWhereWithAggregatesInput = {
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
-  username?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
   passwordChangeAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
-  firstName?: Prisma.StringWithAggregatesFilter<"User"> | string
-  lastName?: Prisma.StringWithAggregatesFilter<"User"> | string
-  middleName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  avatar?: Prisma.StringWithAggregatesFilter<"User"> | string
-  role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   isInitial?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   isUseTwoFactor?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
@@ -362,15 +293,9 @@ export type UserScalarWhereWithAggregatesInput = {
 
 export type UserCreateInput = {
   id?: string
-  username: string
   email: string
   passwordHash: string
   passwordChangeAt?: Date | string
-  firstName: string
-  lastName: string
-  middleName?: string | null
-  avatar?: string
-  role?: $Enums.Role
   isActive?: boolean
   isInitial?: boolean
   isUseTwoFactor?: boolean
@@ -378,19 +303,14 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   passwordHistory?: Prisma.UserPasswordHistoryCreateNestedManyWithoutUserInput
+  employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: string
-  username: string
   email: string
   passwordHash: string
   passwordChangeAt?: Date | string
-  firstName: string
-  lastName: string
-  middleName?: string | null
-  avatar?: string
-  role?: $Enums.Role
   isActive?: boolean
   isInitial?: boolean
   isUseTwoFactor?: boolean
@@ -398,19 +318,14 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   passwordHistory?: Prisma.UserPasswordHistoryUncheckedCreateNestedManyWithoutUserInput
+  employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   passwordChangeAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isInitial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isUseTwoFactor?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -418,19 +333,14 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   passwordHistory?: Prisma.UserPasswordHistoryUpdateManyWithoutUserNestedInput
+  employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   passwordChangeAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isInitial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isUseTwoFactor?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -438,19 +348,14 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   passwordHistory?: Prisma.UserPasswordHistoryUncheckedUpdateManyWithoutUserNestedInput
+  employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: string
-  username: string
   email: string
   passwordHash: string
   passwordChangeAt?: Date | string
-  firstName: string
-  lastName: string
-  middleName?: string | null
-  avatar?: string
-  role?: $Enums.Role
   isActive?: boolean
   isInitial?: boolean
   isUseTwoFactor?: boolean
@@ -461,15 +366,9 @@ export type UserCreateManyInput = {
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   passwordChangeAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isInitial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isUseTwoFactor?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -480,15 +379,9 @@ export type UserUpdateManyMutationInput = {
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   passwordChangeAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isInitial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isUseTwoFactor?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -499,15 +392,9 @@ export type UserUncheckedUpdateManyInput = {
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  username?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   passwordChangeAt?: Prisma.SortOrder
-  firstName?: Prisma.SortOrder
-  lastName?: Prisma.SortOrder
-  middleName?: Prisma.SortOrder
-  avatar?: Prisma.SortOrder
-  role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isInitial?: Prisma.SortOrder
   isUseTwoFactor?: Prisma.SortOrder
@@ -518,15 +405,9 @@ export type UserCountOrderByAggregateInput = {
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  username?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   passwordChangeAt?: Prisma.SortOrder
-  firstName?: Prisma.SortOrder
-  lastName?: Prisma.SortOrder
-  middleName?: Prisma.SortOrder
-  avatar?: Prisma.SortOrder
-  role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isInitial?: Prisma.SortOrder
   isUseTwoFactor?: Prisma.SortOrder
@@ -537,15 +418,9 @@ export type UserMaxOrderByAggregateInput = {
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  username?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   passwordChangeAt?: Prisma.SortOrder
-  firstName?: Prisma.SortOrder
-  lastName?: Prisma.SortOrder
-  middleName?: Prisma.SortOrder
-  avatar?: Prisma.SortOrder
-  role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   isInitial?: Prisma.SortOrder
   isUseTwoFactor?: Prisma.SortOrder
@@ -567,14 +442,6 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
-export type EnumRoleFieldUpdateOperationsInput = {
-  set?: $Enums.Role
-}
-
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
@@ -593,42 +460,46 @@ export type UserUpdateOneRequiredWithoutPasswordHistoryNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPasswordHistoryInput, Prisma.UserUpdateWithoutPasswordHistoryInput>, Prisma.UserUncheckedUpdateWithoutPasswordHistoryInput>
 }
 
+export type UserCreateNestedOneWithoutEmployeeInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEmployeeInput, Prisma.UserUncheckedCreateWithoutEmployeeInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEmployeeInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutEmployeeNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEmployeeInput, Prisma.UserUncheckedCreateWithoutEmployeeInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEmployeeInput
+  upsert?: Prisma.UserUpsertWithoutEmployeeInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEmployeeInput, Prisma.UserUpdateWithoutEmployeeInput>, Prisma.UserUncheckedUpdateWithoutEmployeeInput>
+}
+
 export type UserCreateWithoutPasswordHistoryInput = {
   id?: string
-  username: string
   email: string
   passwordHash: string
   passwordChangeAt?: Date | string
-  firstName: string
-  lastName: string
-  middleName?: string | null
-  avatar?: string
-  role?: $Enums.Role
   isActive?: boolean
   isInitial?: boolean
   isUseTwoFactor?: boolean
   lastLogin: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  employee?: Prisma.EmployeeCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPasswordHistoryInput = {
   id?: string
-  username: string
   email: string
   passwordHash: string
   passwordChangeAt?: Date | string
-  firstName: string
-  lastName: string
-  middleName?: string | null
-  avatar?: string
-  role?: $Enums.Role
   isActive?: boolean
   isInitial?: boolean
   isUseTwoFactor?: boolean
   lastLogin: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPasswordHistoryInput = {
@@ -649,40 +520,102 @@ export type UserUpdateToOneWithWhereWithoutPasswordHistoryInput = {
 
 export type UserUpdateWithoutPasswordHistoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   passwordChangeAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isInitial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isUseTwoFactor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employee?: Prisma.EmployeeUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPasswordHistoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   passwordChangeAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isInitial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isUseTwoFactor?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employee?: Prisma.EmployeeUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutEmployeeInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  passwordChangeAt?: Date | string
+  isActive?: boolean
+  isInitial?: boolean
+  isUseTwoFactor?: boolean
+  lastLogin: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  passwordHistory?: Prisma.UserPasswordHistoryCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutEmployeeInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  passwordChangeAt?: Date | string
+  isActive?: boolean
+  isInitial?: boolean
+  isUseTwoFactor?: boolean
+  lastLogin: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  passwordHistory?: Prisma.UserPasswordHistoryUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutEmployeeInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutEmployeeInput, Prisma.UserUncheckedCreateWithoutEmployeeInput>
+}
+
+export type UserUpsertWithoutEmployeeInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutEmployeeInput, Prisma.UserUncheckedUpdateWithoutEmployeeInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutEmployeeInput, Prisma.UserUncheckedCreateWithoutEmployeeInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutEmployeeInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutEmployeeInput, Prisma.UserUncheckedUpdateWithoutEmployeeInput>
+}
+
+export type UserUpdateWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordChangeAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isInitial?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUseTwoFactor?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordHistory?: Prisma.UserPasswordHistoryUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutEmployeeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordChangeAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isInitial?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUseTwoFactor?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLogin?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordHistory?: Prisma.UserPasswordHistoryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -718,15 +651,9 @@ export type UserCountOutputTypeCountPasswordHistoryArgs<ExtArgs extends runtime.
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  username?: boolean
   email?: boolean
   passwordHash?: boolean
   passwordChangeAt?: boolean
-  firstName?: boolean
-  lastName?: boolean
-  middleName?: boolean
-  avatar?: boolean
-  role?: boolean
   isActive?: boolean
   isInitial?: boolean
   isUseTwoFactor?: boolean
@@ -734,20 +661,15 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   passwordHistory?: boolean | Prisma.User$passwordHistoryArgs<ExtArgs>
+  employee?: boolean | Prisma.User$employeeArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  username?: boolean
   email?: boolean
   passwordHash?: boolean
   passwordChangeAt?: boolean
-  firstName?: boolean
-  lastName?: boolean
-  middleName?: boolean
-  avatar?: boolean
-  role?: boolean
   isActive?: boolean
   isInitial?: boolean
   isUseTwoFactor?: boolean
@@ -758,15 +680,9 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  username?: boolean
   email?: boolean
   passwordHash?: boolean
   passwordChangeAt?: boolean
-  firstName?: boolean
-  lastName?: boolean
-  middleName?: boolean
-  avatar?: boolean
-  role?: boolean
   isActive?: boolean
   isInitial?: boolean
   isUseTwoFactor?: boolean
@@ -777,15 +693,9 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 
 export type UserSelectScalar = {
   id?: boolean
-  username?: boolean
   email?: boolean
   passwordHash?: boolean
   passwordChangeAt?: boolean
-  firstName?: boolean
-  lastName?: boolean
-  middleName?: boolean
-  avatar?: boolean
-  role?: boolean
   isActive?: boolean
   isInitial?: boolean
   isUseTwoFactor?: boolean
@@ -794,9 +704,10 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "passwordHash" | "passwordChangeAt" | "firstName" | "lastName" | "middleName" | "avatar" | "role" | "isActive" | "isInitial" | "isUseTwoFactor" | "lastLogin" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "passwordChangeAt" | "isActive" | "isInitial" | "isUseTwoFactor" | "lastLogin" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   passwordHistory?: boolean | Prisma.User$passwordHistoryArgs<ExtArgs>
+  employee?: boolean | Prisma.User$employeeArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -806,18 +717,13 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     passwordHistory: Prisma.$UserPasswordHistoryPayload<ExtArgs>[]
+    employee: Prisma.$EmployeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    username: string
     email: string
     passwordHash: string
     passwordChangeAt: Date
-    firstName: string
-    lastName: string
-    middleName: string | null
-    avatar: string
-    role: $Enums.Role
     isActive: boolean
     isInitial: boolean
     isUseTwoFactor: boolean
@@ -1219,6 +1125,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   passwordHistory<T extends Prisma.User$passwordHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$passwordHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPasswordHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  employee<T extends Prisma.User$employeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$employeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1249,15 +1156,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
-  readonly username: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
   readonly passwordChangeAt: Prisma.FieldRef<"User", 'DateTime'>
-  readonly firstName: Prisma.FieldRef<"User", 'String'>
-  readonly lastName: Prisma.FieldRef<"User", 'String'>
-  readonly middleName: Prisma.FieldRef<"User", 'String'>
-  readonly avatar: Prisma.FieldRef<"User", 'String'>
-  readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
   readonly isInitial: Prisma.FieldRef<"User", 'Boolean'>
   readonly isUseTwoFactor: Prisma.FieldRef<"User", 'Boolean'>
@@ -1678,6 +1579,25 @@ export type User$passwordHistoryArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.UserPasswordHistoryScalarFieldEnum | Prisma.UserPasswordHistoryScalarFieldEnum[]
+}
+
+/**
+ * User.employee
+ */
+export type User$employeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Employee
+   */
+  select?: Prisma.EmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Employee
+   */
+  omit?: Prisma.EmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmployeeInclude<ExtArgs> | null
+  where?: Prisma.EmployeeWhereInput
 }
 
 /**

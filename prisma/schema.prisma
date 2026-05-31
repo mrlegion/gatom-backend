@@ -11,17 +11,9 @@ datasource db {
 model User {
   id String @id @default(nanoid())
 
-  username         String   @unique
   email            String   @unique
   passwordHash     String   @map("password_hash")
-  passwordChangeAt DateTime @map("password_change_at") @default(now())
-
-  firstName  String  @map("first_name")
-  lastName   String  @map("last_name")
-  middleName String? @map("middle_name")
-  avatar     String  @default("/images/profile/default-user.svg")
-
-  role Role @default(USER)
+  passwordChangeAt DateTime @default(now()) @map("password_change_at")
 
   isActive       Boolean @default(true)
   isInitial      Boolean @default(true) @map("is_initial")
@@ -30,6 +22,8 @@ model User {
   passwordHistory UserPasswordHistory[]
 
   lastLogin DateTime @map("last_login")
+
+  employee Employee? @relation("UserEmployee")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -49,6 +43,84 @@ model UserPasswordHistory {
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("user_password_histories")
+}
+
+model Employee {
+  id String @id @default(nanoid())
+
+  username   String  @unique
+  firstName  String  @map("first_name")
+  lastName   String  @map("last_name")
+  middleName String? @map("middle_name")
+  avatar     String  @default("/images/profile/default-user.svg")
+  role       Role    @default(USER)
+
+  position   Position @relation(fields: [positionId], references: [id])
+  positionId String   @map("position_id")
+
+  user   User   @relation("UserEmployee", fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id") @unique
+
+  subsidiary   Subsidiary @relation(fields: [subsidiaryId], references: [id])
+  subsidiaryId String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("employees")
+}
+
+model Organization {
+  id String @id @default(nanoid())
+
+  title      String @unique
+  shortTitle String @unique @map("short_title")
+
+  ogrn  String
+  inn   String
+  kpp   String
+  oktmo String
+
+  subsidiaries Subsidiary[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("organozations")
+}
+
+model Subsidiary {
+  id String @id @default(nanoid())
+
+  title   String @unique
+  address String
+
+  phones String[]
+  emails String[]
+
+  employees Employee[]
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String       @map("organization_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("subsidiaries")
+}
+
+model Position {
+  id String @id @default(nanoid())
+
+  title       String  @unique
+  isNonActive Boolean @default(false) @map("is_non_active")
+
+  employees Employee[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("positions")
 }
 
 enum Role {
