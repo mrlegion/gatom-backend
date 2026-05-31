@@ -12,9 +12,13 @@ import { JwtService } from '@nestjs/jwt'
 import { hash, verify } from 'argon2'
 import { Request, Response } from 'express'
 
-import { User } from '../../../prisma/generated/client'
-import { PasswordHistoryRepository, UserRepository } from '../../repositories'
-import { IJwtPayload } from '../../shared/types'
+import { Role, User } from '../../../prisma/generated/client'
+import {
+	EmployeeRepository,
+	PasswordHistoryRepository,
+	UserRepository
+} from '../../repositories'
+import { IJwtPayload, ITokens } from '../../shared/types'
 import { omit } from '../../shared/utils'
 
 import {
@@ -37,6 +41,7 @@ export class AuthService {
 	public constructor(
 		private readonly userRepository: UserRepository,
 		private readonly passwordHistoryRepository: PasswordHistoryRepository,
+		private readonly employeeRepository: EmployeeRepository,
 		private readonly jwt: JwtService,
 		private readonly config: ConfigService
 	) {
@@ -69,6 +74,14 @@ export class AuthService {
 			throw new NotFoundException(
 				'Не верная электронная почта или пароль'
 			)
+		if (!user.employee) {
+			this._logger.error(
+				`У пользователя ${user.id} не найдена запись Employee`
+			)
+			throw new NotFoundException(
+				'Не найдена запись сотрудника у пользователя'
+			)
+		}
 
 		const isPasswordValid = await verify(user.passwordHash, password)
 		if (!isPasswordValid)
@@ -76,7 +89,11 @@ export class AuthService {
 				'Не верная электронная почта или пароль'
 			)
 
-		const { accessToken, refreshToken } = this.issueTokens(user)
+		const { accessToken, refreshToken } = this.issueTokens(
+			user.id,
+			user.employee.username,
+			user.employee.role
+		)
 
 		this.addRefreshTokenToResponse(res, refreshToken)
 
@@ -103,24 +120,19 @@ export class AuthService {
 		res: Response,
 		data: RegisterRequest
 	): Promise<RegisterResponse> {
-		const { email, username } = data
+		const { email, username, positionId, subsidiaryId } = data
 
-		const isEmailExist = await this.userRepository.findByEmail(email, {
-			id: true,
-			email: true
-		})
+		const isEmailExist = await this.userRepository.findByEmail(email)
 		if (isEmailExist)
 			throw new BadRequestException(
 				`Пользователь с электронной почтой ${email} уже используется`
 			)
 
-		const isUsernameExist = await this.userRepository.findByUsername(
-			username,
-			{ id: true, username: true }
-		)
+		const isUsernameExist =
+			await this.employeeRepository.findByUsername(username)
 		if (isUsernameExist)
 			throw new BadRequestException(
-				`Пользователь с именем ${username} уже существует`
+				`Сотрудник с именем пользователя ${username} уже существует`
 			)
 
 		const { password, firstName, lastName, middleName, role } = data
@@ -130,16 +142,24 @@ export class AuthService {
 		try {
 			user = await this.userRepository.create({
 				email,
-				username,
-				firstName,
-				lastName,
-				middleName,
-				role,
 				passwordHash: await hash(password),
 				lastLogin: new Date(Date.now()).toISOString()
 			})
 
 			if (user) {
+				await this.employeeRepository.create({
+					username,
+					firstName,
+					lastName,
+					middleName,
+					role,
+					user: {
+						connect: { id: user.id }
+					},
+					position: { connect: { id: positionId } },
+					subsidiary: { connect: { id: subsidiaryId } }
+				})
+
 				await this.passwordHistoryRepository.create({
 					email: user.email,
 					password: user.passwordHash,
@@ -164,7 +184,11 @@ export class AuthService {
 			)
 		}
 
-		const { accessToken, refreshToken } = this.issueTokens(user)
+		const { accessToken, refreshToken } = this.issueTokens(
+			user.id,
+			username,
+			role
+		)
 
 		this.addRefreshTokenToResponse(res, refreshToken)
 
@@ -353,8 +377,20 @@ export class AuthService {
 
 		const user = await this.userRepository.findById(result.userId)
 		if (!user) throw new UnauthorizedException('Не верный токен обновления')
+		if (!user.employee) {
+			this._logger.error(
+				`У пользователя ${user.id} не найдена запись Employee`
+			)
+			throw new NotFoundException(
+				'Не найдена запись сотрудника у пользователя'
+			)
+		}
 
-		const tokens = this.issueTokens(user)
+		const tokens = this.issueTokens(
+			user.id,
+			user.employee.username,
+			user.employee.role
+		)
 
 		return { user, ...tokens }
 	}
@@ -362,17 +398,21 @@ export class AuthService {
 	/**
 	 * Генерирует пару JWT-токенов (access и refresh) для переданного пользователя.
 	 *
-	 * @param user - Объект пользователя, для которого создаются токены
-	 * @returns Объект, содержащий accessToken и refreshToken
+	 * @param userId - Уникальный номер пользователя
+	 * @param username - Имя пользователя сотрудника
+	 * @param role - Роль сотрудника
+	 *
+	 * @returns Объект, содержащий accessToken и refreshToken (см. {@link ITokens})
 	 *
 	 * @example
 	 * const { accessToken, refreshToken } = this.issueTokens(user);
+	 *
 	 */
-	private issueTokens(user: User) {
+	private issueTokens(userId: string, username: string, role: Role): ITokens {
 		const data: IJwtPayload = {
-			username: user.username,
-			role: user.role,
-			userId: user.id
+			username: username,
+			role: role,
+			userId: userId
 		}
 
 		const accessToken = this.jwt.sign(data, {

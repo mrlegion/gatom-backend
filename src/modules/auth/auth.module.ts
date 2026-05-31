@@ -4,7 +4,11 @@ import { JwtModule } from '@nestjs/jwt'
 
 import { getJwtConfig } from '../../config'
 import { JwtStrategy } from '../../config/strategies/jwt.strategy'
-import { PasswordHistoryRepository, UserRepository } from '../../repositories'
+import {
+	EmployeeRepository,
+	PasswordHistoryRepository,
+	UserRepository
+} from '../../repositories'
 import { PrismaService } from '../../services'
 
 import { AuthController } from './auth.controller'
@@ -23,6 +27,7 @@ import { AuthService } from './auth.service'
 	providers: [
 		AuthService,
 		UserRepository,
+		EmployeeRepository,
 		PrismaService,
 		PasswordHistoryRepository,
 		JwtStrategy

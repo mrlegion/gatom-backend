@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common'
+import { Prisma } from '@prisma/client/extension'
 
 import { User } from '../../../prisma/generated/client'
 import {
@@ -7,6 +8,8 @@ import {
 	UserUpdateInput
 } from '../../../prisma/generated/models/User'
 import { PrismaService } from '../../services'
+
+import Result = Prisma.Result
 
 /**
  * Репозиторий для управления данными пользователя
@@ -23,16 +26,15 @@ export class UserRepository {
 	 * Находит пользователя по уникальному идентификатору.
 	 *
 	 * @param id - Уникальный идентификатор пользователя (UUID или строка)
-	 * @param select - Объект, определяющий, какие поля пользователя следует выбрать (опционально)
+	 *
 	 * @returns Возвращает объект пользователя, если найден, иначе `null`
 	 */
-	public async findById(
-		id: string,
-		select?: UserSelect
-	): Promise<User | null> {
+	public async findById(id: string) {
 		return this.prisma.user.findUnique({
 			where: { id },
-			select
+			include: {
+				employee: true
+			}
 		})
 	}
 
@@ -40,33 +42,15 @@ export class UserRepository {
 	 * Найти пользователя по электронной почте
 	 *
 	 * @param email - Электронная почта пользователя
-	 * @param select - Объект, определяющий, какие поля пользователя следует выбрать (опционально)
+	 *
 	 * @returns Возвращает объект пользователя, если найден, иначе `null`
 	 */
-	public async findByEmail(
-		email: string,
-		select?: UserSelect
-	): Promise<User | null> {
+	public async findByEmail(email: string) {
 		return this.prisma.user.findUnique({
 			where: { email },
-			select
-		})
-	}
-
-	/**
-	 * Найти пользователя по имени пользователя
-	 *
-	 * @param username - Имя пользователя
-	 * @param select - Объект, определяющий, какие поля пользователя следует выбрать (опционально)
-	 * @returns Возвращает объект пользователя, если найден, иначе `null`
-	 */
-	public async findByUsername(
-		username: string,
-		select?: UserSelect
-	): Promise<User | null> {
-		return this.prisma.user.findUnique({
-			where: { username },
-			select
+			include: {
+				employee: true
+			}
 		})
 	}
 
@@ -74,6 +58,7 @@ export class UserRepository {
 	 * Создание нового пользователя
 	 *
 	 * @param data - Данные для создания пользователя
+	 *
 	 * @returns Возвращает объект пользователя, иначе `null`
 	 */
 	public async create(data: UserCreateInput): Promise<User | null> {
@@ -88,6 +73,7 @@ export class UserRepository {
 	 * @param id - Уникальный номер пользователя
 	 * @param data - Данные для создания пользователя
 	 * @param select - Объект, определяющий, какие поля пользователя следует выбрать (опционально)
+	 *
 	 * @returns Возвращает объект пользователя, иначе `null`
 	 */
 	public async update(
@@ -106,6 +92,7 @@ export class UserRepository {
 	 * Удаление пользователя
 	 *
 	 * @param id - Уникальный номер пользователя
+	 *
 	 * @returns Возвращает объект пользователя, иначе `null`
 	 */
 	public async delete(id: string) {

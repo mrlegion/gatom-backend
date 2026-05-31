@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker/locale/ru'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsEmail, IsEnum, IsNotEmpty, IsString, Length } from 'class-validator'
 
@@ -24,7 +25,7 @@ export class RegisterRequest {
 
 	@ApiProperty({
 		title: 'Имя пользователя',
-		example: 'Иван'
+		example: faker.person.firstName()
 	})
 	@IsString()
 	@IsNotEmpty()
@@ -32,7 +33,7 @@ export class RegisterRequest {
 
 	@ApiProperty({
 		title: 'Отчество пользователя',
-		example: 'Иванович'
+		example: faker.person.middleName()
 	})
 	@IsString()
 	@IsNotEmpty()
@@ -40,7 +41,7 @@ export class RegisterRequest {
 
 	@ApiProperty({
 		title: 'Фамилия пользователя',
-		example: 'Иванов'
+		example: faker.person.lastName()
 	})
 	@IsString()
 	@IsNotEmpty()
@@ -62,4 +63,20 @@ export class RegisterRequest {
 	})
 	@IsEnum(Role)
 	public role: Role
+
+	@ApiProperty({
+		title: 'Уникальный номер должности',
+		example: faker.string.uuid()
+	})
+	@IsString()
+	@IsNotEmpty()
+	public positionId: string
+
+	@ApiProperty({
+		title: 'Уникальный номер филиала',
+		example: faker.string.uuid()
+	})
+	@IsString()
+	@IsNotEmpty()
+	public subsidiaryId: string
 }

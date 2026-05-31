@@ -7,7 +7,7 @@ export class ChangePasswordRequest {
 	})
 	@IsString()
 	@IsNotEmpty()
-	@Length(12, 16)
+	@Length(8, 16)
 	public oldPassword: string
 
 	@ApiProperty({
@@ -15,6 +15,6 @@ export class ChangePasswordRequest {
 	})
 	@IsString()
 	@IsNotEmpty()
-	@Length(12, 16)
+	@Length(8, 16)
 	public newPassword: string
 }

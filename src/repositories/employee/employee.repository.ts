@@ -8,6 +8,22 @@ export class EmployeeRepository {
 	public constructor(private readonly prisma: PrismaService) {}
 
 	/**
+	 * Найти сотрудника по имени пользователю
+	 *
+	 * @param username - Имя пользователя сотрудника
+	 *
+	 * @returns Запись сотрудника с данными пользователя
+	 */
+	public async findByUsername(username: string) {
+		return this.prisma.employee.findUnique({
+			where: { username },
+			include: {
+				user: true
+			}
+		})
+	}
+
+	/**
 	 * Создание новой записи сотрудника
 	 *
 	 * @param data - Данные для создания записи
