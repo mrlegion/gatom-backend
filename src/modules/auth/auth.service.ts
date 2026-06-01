@@ -17,6 +17,7 @@ import {
 	EmployeeRepository,
 	PasswordHistoryRepository,
 	PositionRepository,
+	SubsidiaryRepository,
 	UserRepository
 } from '../../repositories'
 import { IJwtPayload, ITokens } from '../../shared/types'
@@ -44,6 +45,7 @@ export class AuthService {
 		private readonly passwordHistoryRepository: PasswordHistoryRepository,
 		private readonly employeeRepository: EmployeeRepository,
 		private readonly positionRepository: PositionRepository,
+		private readonly subsidiaryRepository: SubsidiaryRepository,
 		private readonly jwt: JwtService,
 		private readonly config: ConfigService
 	) {
@@ -136,6 +138,10 @@ export class AuthService {
 			throw new BadRequestException(
 				`Сотрудник с именем пользователя ${username} уже существует`
 			)
+
+		const isSubsidiaryExist =
+			await this.subsidiaryRepository.findById(subsidiaryId)
+		if (!isSubsidiaryExist) throw new NotFoundException('Филиал не найден')
 
 		const isPositionExist =
 			await this.positionRepository.findById(positionId)

@@ -8,6 +8,7 @@ import {
 	EmployeeRepository,
 	PasswordHistoryRepository,
 	PositionRepository,
+	SubsidiaryRepository,
 	UserRepository
 } from '../../repositories'
 import { PrismaService } from '../../services'
@@ -30,6 +31,7 @@ import { AuthService } from './auth.service'
 		UserRepository,
 		EmployeeRepository,
 		PositionRepository,
+		SubsidiaryRepository,
 		PrismaService,
 		PasswordHistoryRepository,
 		JwtStrategy
