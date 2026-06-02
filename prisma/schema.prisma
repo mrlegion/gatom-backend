@@ -59,7 +59,7 @@ model Employee {
   positionId String   @map("position_id")
 
   user   User   @relation("UserEmployee", fields: [userId], references: [id], onDelete: Cascade)
-  userId String @map("user_id") @unique
+  userId String @unique @map("user_id")
 
   subsidiary   Subsidiary @relation(fields: [subsidiaryId], references: [id])
   subsidiaryId String
@@ -86,7 +86,7 @@ model Organization {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("organozations")
+  @@map("organizations")
 }
 
 model Subsidiary {
