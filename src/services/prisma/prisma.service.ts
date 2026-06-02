@@ -1,4 +1,5 @@
 import {
+	Global,
 	Injectable,
 	Logger,
 	OnModuleDestroy,

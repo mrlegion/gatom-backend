@@ -1,6 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 
-import { PositionCreateInput } from '../../../prisma/generated/models/Position'
+import {
+	PositionCreateInput,
+	PositionUpdateInput
+} from '../../../prisma/generated/models/Position'
 import { PrismaService } from '../../services'
 
 @Injectable()
@@ -55,6 +58,21 @@ export class PositionRepository {
 	 */
 	public async create(data: PositionCreateInput) {
 		return this.prisma.position.create({ data })
+	}
+
+	/**
+	 * Обновление записи должности
+	 *
+	 * @param id - Уникальный номер должности
+	 * @param data - Данные для обновления должности
+	 *
+	 * @returns Обновленная запись должности
+	 */
+	public async update(id: string, data: PositionUpdateInput) {
+		return this.prisma.position.update({
+			where: { id },
+			data
+		})
 	}
 
 	/**
