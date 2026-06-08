@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 
+import { Organization } from '../../../prisma/generated/client'
 import {
 	OrganizationCreateInput,
 	OrganizationUpdateInput
@@ -10,14 +11,28 @@ import { PrismaService } from '../../services'
 export class OrganizationRepository {
 	public constructor(private readonly prisma: PrismaService) {}
 
+	private readonly _subsidiaries = {
+		select: {
+			id: true,
+			title: true,
+			address: true,
+			phones: true,
+			emails: true
+		}
+	}
+
 	/**
 	 * Получить все записи организаций
 	 *
+	 * @param withSubsidiaries - включить в запрос филиалы
+	 *
 	 * @returns Массив записей организаций
 	 */
-	public async findAll() {
+	public async findAll(withSubsidiaries: boolean = true) {
 		return this.prisma.organization.findMany({
-			include: { subsidiaries: true }
+			include: {
+				subsidiaries: withSubsidiaries ? this._subsidiaries : false
+			}
 		})
 	}
 
@@ -32,12 +47,32 @@ export class OrganizationRepository {
 	public async findById(id: string, withSubsidiaries: boolean = false) {
 		return this.prisma.organization.findUnique({
 			where: { id },
-			include: { subsidiaries: withSubsidiaries }
+			include: {
+				subsidiaries: withSubsidiaries ? this._subsidiaries : false
+			}
+		})
+	}
+
+	/**
+	 * Найти Организацию по наименованию
+	 *
+	 * @param title - Наименование Организации
+	 * @param withSubsidiaries - Включить в запрос Филиалы
+	 *
+	 * @returns Найденый объект записи или Null
+	 */
+	public async findByTitle(title: string, withSubsidiaries: boolean = true) {
+		return this.prisma.organization.findUnique({
+			where: { title },
+			include: {
+				subsidiaries: withSubsidiaries ? this._subsidiaries : false
+			}
 		})
 	}
 
 	/**
 	 * Найти запись организации по филиалу
+	 *
 	 * @param subsidiaryId - Уникальный код филиала
 	 *
 	 * @returns Объект организации
@@ -61,7 +96,7 @@ export class OrganizationRepository {
 	 *
 	 * @returns Объект созданной записи организации
 	 */
-	public async create(data: OrganizationCreateInput) {
+	public async create(data: OrganizationCreateInput): Promise<Organization> {
 		return this.prisma.organization.create({ data })
 	}
 
@@ -73,7 +108,10 @@ export class OrganizationRepository {
 	 *
 	 * @returns Обновленный объект организации
 	 */
-	public async update(id: string, data: OrganizationUpdateInput) {
+	public async update(
+		id: string,
+		data: OrganizationUpdateInput
+	): Promise<Organization> {
 		return this.prisma.organization.update({
 			where: { id },
 			data

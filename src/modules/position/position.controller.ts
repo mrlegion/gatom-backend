@@ -22,7 +22,7 @@ import { Auth } from '../../shared/decorators'
 import { PositionCreateRequest, PositionUpdateRequest } from './dto'
 import { PositionService } from './position.service'
 
-@Controller('position')
+@Controller('positions')
 export class PositionController {
 	constructor(private readonly positionService: PositionService) {}
 
@@ -38,7 +38,7 @@ export class PositionController {
 		status: HttpStatus.OK,
 		description: 'Успешное выполнение операции'
 	})
-	@Get('/')
+	@Get()
 	@HttpCode(HttpStatus.OK)
 	public async getAll(): Promise<Position[]> {
 		return this.positionService.getAll()
@@ -54,7 +54,7 @@ export class PositionController {
 	@ApiOperation({
 		summary: 'Получение должности по ID'
 	})
-	@Get('/find-by-id/:id')
+	@Get('find-by-id/:id')
 	@HttpCode(HttpStatus.OK)
 	public async findById(@Param('id') positionId: string) {
 		return this.positionService.findById(positionId)
@@ -73,7 +73,7 @@ export class PositionController {
 	@ApiBody({ type: PositionCreateRequest })
 	@ApiBearerAuth()
 	@Auth()
-	@Post('/')
+	@Post()
 	@HttpCode(HttpStatus.OK)
 	public async create(@Body() data: PositionCreateRequest) {
 		return this.positionService.create(data)
@@ -92,7 +92,7 @@ export class PositionController {
 	})
 	@ApiBearerAuth()
 	@Auth()
-	@Put('/:id')
+	@Put(':id')
 	@HttpCode(HttpStatus.OK)
 	public async update(
 		@Param('id') positionId: string,
@@ -117,7 +117,7 @@ export class PositionController {
 	})
 	@ApiBearerAuth()
 	@Auth()
-	@Delete('/:id')
+	@Delete(':id')
 	@HttpCode(HttpStatus.OK)
 	public async delete(@Param('id') positonId: string) {
 		return this.positionService.delete(positonId)

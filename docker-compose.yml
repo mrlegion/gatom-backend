@@ -9,14 +9,14 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_NAME}
     volumes:
-      - pg_data:/var/lib/postresql/data
+      - gatom_pg_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
       - gatom_network
 
 volumes:
-  pg_data:
+  gatom_pg_data:
 
 networks:
   gatom_network:

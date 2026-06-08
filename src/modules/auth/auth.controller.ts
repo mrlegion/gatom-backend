@@ -64,7 +64,7 @@ export class AuthController {
 		example: ErrorExampleFactory.notFound()
 	})
 	@ApiBody({ type: LoginRequest })
-	@Post('/login')
+	@Post('login')
 	@HttpCode(HttpStatus.OK)
 	public async login(
 		@Res({ passthrough: true }) res: Response,
@@ -101,7 +101,7 @@ export class AuthController {
 			}
 		}
 	})
-	@Post('/register')
+	@Post('register')
 	@HttpCode(HttpStatus.OK)
 	public async register(
 		@Res({ passthrough: true }) res: Response,
@@ -131,7 +131,7 @@ export class AuthController {
 		example: ErrorExampleFactory.unauthorized()
 	})
 	@ApiBearerAuth()
-	@Post('/refresh')
+	@Post('refresh')
 	@HttpCode(HttpStatus.OK)
 	public async refresh(
 		@Req() req: Request,
@@ -150,7 +150,7 @@ export class AuthController {
 	@ApiOperation({
 		summary: 'Выход из системы'
 	})
-	@Post('/logout')
+	@Post('logout')
 	@HttpCode(HttpStatus.OK)
 	public async logout(
 		@Res({ passthrough: true }) res: Response
@@ -197,7 +197,7 @@ export class AuthController {
 		example: ErrorExampleFactory.unauthorized()
 	})
 	@Auth()
-	@Post('/update-password')
+	@Post('update-password')
 	@HttpCode(HttpStatus.OK)
 	public async changePassword(
 		@CurrentUser('id') userId: string,

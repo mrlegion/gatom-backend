@@ -3,6 +3,8 @@
 /node_modules
 /build
 
+/.ollamassist
+
 # Logs
 logs
 *.log
