@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 
-import { AuthModule } from './modules/auth/auth.module'
-import { OrganizationModule } from './modules/organization/organization.module';
-import { PositionModule } from './modules/position/position.module';
-import { SubsidiaryModule } from './modules/subsidiary/subsidiary.module';
+import { AuthModule } from './v1/modules/auth/auth.module'
+import { OrganizationModule } from './v1/modules/organization/organization.module'
+import { PositionModule } from './v1/modules/position/position.module'
+import { SubsidiaryModule } from './v1/modules/subsidiary/subsidiary.module'
 
 @Module({
 	imports: [

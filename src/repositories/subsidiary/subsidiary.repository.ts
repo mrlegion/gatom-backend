@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 
+import { Subsidiary } from '../../../prisma/generated/client'
 import {
 	SubsidiaryCreateInput,
 	SubsidiaryUpdateInput
@@ -15,7 +16,7 @@ export class SubsidiaryRepository {
 	 *
 	 * @returns Массив объектов филиалов
 	 */
-	public findAll() {
+	public findAll(): Promise<Subsidiary[]> {
 		return this.prisma.subsidiary.findMany()
 	}
 
@@ -23,14 +24,25 @@ export class SubsidiaryRepository {
 	 * Найти организацию по уникальному коду
 	 *
 	 * @param id - Уникальный код филиала
-	 * @param withOrganization - Включить организацию в выборку
 	 *
 	 * @returns Объект филиала
 	 */
-	public async findById(id: string, withOrganization: boolean = false) {
+	public async findById(id: string): Promise<Subsidiary | null> {
 		return this.prisma.subsidiary.findUnique({
-			where: { id },
-			include: { organization: withOrganization }
+			where: { id }
+		})
+	}
+
+	/**
+	 * Найти филиал по наименованию
+	 *
+	 * @param title - Наименование филиала
+	 *
+	 * @returns Объект филиала
+	 */
+	public async findByTitle(title: string): Promise<Subsidiary | null> {
+		return this.prisma.subsidiary.findUnique({
+			where: { title }
 		})
 	}
 
@@ -41,7 +53,9 @@ export class SubsidiaryRepository {
 	 *
 	 * @returns Массив объектов филиалов
 	 */
-	public async findByOrganization(organizationId: string) {
+	public async findByOrganization(
+		organizationId: string
+	): Promise<Subsidiary[] | null> {
 		return this.prisma.subsidiary.findMany({
 			where: {
 				organizationId
@@ -54,9 +68,9 @@ export class SubsidiaryRepository {
 	 *
 	 * @param data - Данные для создания записи
 	 *
-	 * @returns Объект созданой записи филиала
+	 * @returns Объект созданной записи филиала
 	 */
-	public async create(data: SubsidiaryCreateInput) {
+	public async create(data: SubsidiaryCreateInput): Promise<Subsidiary> {
 		return this.prisma.subsidiary.create({ data })
 	}
 
@@ -68,7 +82,10 @@ export class SubsidiaryRepository {
 	 *
 	 * @returns Обновленный объект записи филиала
 	 */
-	public async update(id: string, data: SubsidiaryUpdateInput) {
+	public async update(
+		id: string,
+		data: SubsidiaryUpdateInput
+	): Promise<Subsidiary> {
 		return this.prisma.subsidiary.update({
 			where: { id },
 			data
@@ -82,7 +99,7 @@ export class SubsidiaryRepository {
 	 *
 	 * @returns Удаленный объект филиала
 	 */
-	public async delete(id: string) {
+	public async delete(id: string): Promise<Subsidiary> {
 		return this.prisma.subsidiary.delete({ where: { id } })
 	}
 }

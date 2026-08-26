@@ -37,6 +37,23 @@ export class OrganizationRepository {
 	}
 
 	/**
+	 * Выбрать организации по списку ID
+	 *
+	 * @param ids - Массив уникальных номеров
+	 *
+	 * @returns Массив записей организаций
+	 */
+	public async findByIds(ids: string[]) {
+		return this.prisma.organization.findMany({
+			where: {
+				id: {
+					in: ids
+				}
+			}
+		})
+	}
+
+	/**
 	 * Найти запись по уникальному идентификатору Организации
 	 *
 	 * @param id - Уникальный идентификатор записи
