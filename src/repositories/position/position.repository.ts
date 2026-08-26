@@ -17,9 +17,13 @@ export class PositionRepository {
 	 *
 	 * @returns Все активные записи должностей
 	 */
-	public async findAll(withNonActive: boolean = false) {
+	public async findAll(withNonActive: boolean = true) {
+		if (withNonActive) {
+			return this.prisma.position.findMany()
+		}
+
 		return this.prisma.position.findMany({
-			where: { isNonActive: withNonActive }
+			where: { isNonActive: false }
 		})
 	}
 
