@@ -48,16 +48,6 @@ export default tseslint.config(
 			],
 			'@typescript-eslint/explicit-module-boundary-types': 'off',
 			'@typescript-eslint/explicit-function-return-type': 'off',
-			'@typescript-eslint/ban-types': [
-				'warn',
-				{
-					extendDefaults: false,
-					types: {
-						'{}': false,
-						Object: false
-					}
-				}
-			],
 			'@typescript-eslint/no-empty-interface': 'off',
 			'@typescript-eslint/explicit-member-accessibility': 'off',
 
