@@ -7,6 +7,7 @@ import { PositionModule } from './v1/modules/position/position.module'
 import { SubsidiaryModule } from './v1/modules/subsidiary/subsidiary.module'
 import { SystemModule } from './v1/modules/system/system.module'
 import { SubsystemModule } from './v1/modules/subsystem/subsystem.module';
+import { ModuleModule } from './v1/modules/module/module.module';
 
 @Module({
 	imports: [
@@ -18,7 +19,8 @@ import { SubsystemModule } from './v1/modules/subsystem/subsystem.module';
 		PositionModule,
 		SubsidiaryModule,
 		SystemModule,
-		SubsystemModule
+		SubsystemModule,
+		ModuleModule
 	]
 })
 export class AppModule {}
