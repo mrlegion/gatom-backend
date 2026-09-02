@@ -8,6 +8,7 @@ import { SubsidiaryModule } from './v1/modules/subsidiary/subsidiary.module'
 import { SystemModule } from './v1/modules/system/system.module'
 import { SubsystemModule } from './v1/modules/subsystem/subsystem.module';
 import { ModuleModule } from './v1/modules/module/module.module';
+import { DevelopmentTypeModule } from './v1/modules/development-type/development-type.module';
 
 @Module({
 	imports: [
@@ -20,7 +21,8 @@ import { ModuleModule } from './v1/modules/module/module.module';
 		SubsidiaryModule,
 		SystemModule,
 		SubsystemModule,
-		ModuleModule
+		ModuleModule,
+		DevelopmentTypeModule
 	]
 })
 export class AppModule {}
