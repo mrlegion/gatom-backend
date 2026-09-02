@@ -213,9 +213,7 @@ model Development {
   comments String
   inactive Boolean @default(false)
 
-  allocated     Boolean      @default(false)
-  allocatedFrom Development? @relation(fields: [allocatedId], references: [id], onDelete: SetNull) @map("allocated_from")
-  allocatedId   String?      @map("allocated_id")
+  allocated Boolean @default(false)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

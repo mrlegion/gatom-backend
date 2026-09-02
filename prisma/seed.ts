@@ -327,6 +327,26 @@ async function makeEmployee() {
 	})
 }
 
+async function makeSystem() {
+	await prisma.system.create({
+		data: {
+			code: '',
+			name: '',
+			prefix: '',
+		}
+	})
+
+	await prisma.system.createMany({
+		data: [
+			{
+				code: '',
+				name: '',
+				prefix: '',
+			}
+		]
+	})
+}
+
 async function up() {
 	await makeOrganization()
 	await makeSubsidiaries()
