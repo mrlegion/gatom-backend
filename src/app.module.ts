@@ -5,6 +5,7 @@ import { AuthModule } from './v1/modules/auth/auth.module'
 import { OrganizationModule } from './v1/modules/organization/organization.module'
 import { PositionModule } from './v1/modules/position/position.module'
 import { SubsidiaryModule } from './v1/modules/subsidiary/subsidiary.module'
+import { SystemModule } from './v1/modules/system/system.module'
 
 @Module({
 	imports: [
@@ -14,7 +15,8 @@ import { SubsidiaryModule } from './v1/modules/subsidiary/subsidiary.module'
 		}),
 		OrganizationModule,
 		PositionModule,
-		SubsidiaryModule
+		SubsidiaryModule,
+		SystemModule
 	]
 })
 export class AppModule {}
