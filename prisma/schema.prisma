@@ -137,7 +137,7 @@ model System {
 
   code   String @unique
   name   String @unique
-  prefix String @unique
+  prefix String
 
   subsystems   Subsystem[]
   developments Development[]

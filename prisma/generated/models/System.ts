@@ -209,15 +209,15 @@ export type SystemWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   code?: string
   name?: string
-  prefix?: string
   AND?: Prisma.SystemWhereInput | Prisma.SystemWhereInput[]
   OR?: Prisma.SystemWhereInput[]
   NOT?: Prisma.SystemWhereInput | Prisma.SystemWhereInput[]
+  prefix?: Prisma.StringFilter<"System"> | string
   createdAt?: Prisma.DateTimeFilter<"System"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"System"> | Date | string
   subsystems?: Prisma.SubsystemListRelationFilter
   developments?: Prisma.DevelopmentListRelationFilter
-}, "id" | "code" | "name" | "prefix">
+}, "id" | "code" | "name">
 
 export type SystemOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
