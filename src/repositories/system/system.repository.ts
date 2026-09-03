@@ -18,7 +18,11 @@ export class SystemRepository {
 	 * @returns - Массив систем
 	 */
 	public async getAll(): Promise<System[]> {
-		return await prisma.system.findMany()
+		try {
+			return await prisma.system.findMany()
+		} catch {
+			return []
+		}
 	}
 
 	/**
