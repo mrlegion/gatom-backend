@@ -140,6 +140,23 @@ export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumRoleFilter<$PrismaModel>
 }
 
+export type EnumSubsystemTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SubsystemType | Prisma.EnumSubsystemTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SubsystemType[] | Prisma.ListEnumSubsystemTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SubsystemType[] | Prisma.ListEnumSubsystemTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSubsystemTypeFilter<$PrismaModel> | $Enums.SubsystemType
+}
+
+export type EnumSubsystemTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SubsystemType | Prisma.EnumSubsystemTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SubsystemType[] | Prisma.ListEnumSubsystemTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SubsystemType[] | Prisma.ListEnumSubsystemTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSubsystemTypeWithAggregatesFilter<$PrismaModel> | $Enums.SubsystemType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSubsystemTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSubsystemTypeFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -277,6 +294,23 @@ export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumRoleFilter<$PrismaModel>
   _max?: Prisma.NestedEnumRoleFilter<$PrismaModel>
+}
+
+export type NestedEnumSubsystemTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SubsystemType | Prisma.EnumSubsystemTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SubsystemType[] | Prisma.ListEnumSubsystemTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SubsystemType[] | Prisma.ListEnumSubsystemTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSubsystemTypeFilter<$PrismaModel> | $Enums.SubsystemType
+}
+
+export type NestedEnumSubsystemTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SubsystemType | Prisma.EnumSubsystemTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SubsystemType[] | Prisma.ListEnumSubsystemTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SubsystemType[] | Prisma.ListEnumSubsystemTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSubsystemTypeWithAggregatesFilter<$PrismaModel> | $Enums.SubsystemType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSubsystemTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSubsystemTypeFilter<$PrismaModel>
 }
 
 

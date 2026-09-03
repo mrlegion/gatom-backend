@@ -69,3 +69,28 @@ export type Subsidiary = Prisma.SubsidiaryModel
  * 
  */
 export type Position = Prisma.PositionModel
+/**
+ * Model System
+ * 
+ */
+export type System = Prisma.SystemModel
+/**
+ * Model Subsystem
+ * 
+ */
+export type Subsystem = Prisma.SubsystemModel
+/**
+ * Model Module
+ * 
+ */
+export type Module = Prisma.ModuleModel
+/**
+ * Model DevelopmentType
+ * 
+ */
+export type DevelopmentType = Prisma.DevelopmentTypeModel
+/**
+ * Model Development
+ * 
+ */
+export type Development = Prisma.DevelopmentModel

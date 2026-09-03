@@ -17,3 +17,13 @@ export const Role = {
 } as const
 
 export type Role = (typeof Role)[keyof typeof Role]
+
+
+export const SubsystemType = {
+  DEVELOPMENT: 'DEVELOPMENT',
+  TEST: 'TEST',
+  PRODUCTION: 'PRODUCTION',
+  PRODUCTION_COPY: 'PRODUCTION_COPY'
+} as const
+
+export type SubsystemType = (typeof SubsystemType)[keyof typeof SubsystemType]

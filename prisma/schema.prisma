@@ -131,3 +131,101 @@ enum Role {
 
   @@map("roles")
 }
+
+model System {
+  id String @id @default(nanoid())
+
+  code   String @unique
+  name   String @unique
+  prefix String
+
+  subsystems   Subsystem[]
+  developments Development[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("systems")
+}
+
+model Subsystem {
+  id String @id @default(nanoid())
+
+  code String        @unique
+  name String        @unique
+  type SubsystemType @default(DEVELOPMENT)
+
+  mandants String[]
+
+  system   System @relation(fields: [systemId], references: [id], onDelete: Cascade)
+  systemId String @map("system_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("subsystems")
+}
+
+model Module {
+  id String @id @default(nanoid())
+
+  code String @unique
+  name String @unique
+
+  developments Development[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("modules")
+}
+
+model DevelopmentType {
+  id String @id @default(nanoid())
+
+  code String @unique
+  name String @unique
+
+  developments Development[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("development_types")
+}
+
+model Development {
+  id String @id @default(nanoid())
+
+  module   Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  moduleId String @map("module_id")
+
+  system   System @relation(fields: [systemId], references: [id], onDelete: Cascade)
+  systemId String @map("system_id")
+
+  type   DevelopmentType @relation(fields: [typeId], references: [id], onDelete: Cascade)
+  typeId String          @map("type_id")
+
+  code     String  @unique
+  number   String
+  package  String  @unique
+  run      String
+  comments String
+  inactive Boolean @default(false)
+
+  allocated Boolean @default(false)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("developments")
+}
+
+enum SubsystemType {
+  DEVELOPMENT
+  TEST
+  PRODUCTION
+  PRODUCTION_COPY
+
+  @@map("subsystem_types")
+}

@@ -56,7 +56,12 @@ export const ModelName = {
   Employee: 'Employee',
   Organization: 'Organization',
   Subsidiary: 'Subsidiary',
-  Position: 'Position'
+  Position: 'Position',
+  System: 'System',
+  Subsystem: 'Subsystem',
+  Module: 'Module',
+  DevelopmentType: 'DevelopmentType',
+  Development: 'Development'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -158,6 +163,73 @@ export const PositionScalarFieldEnum = {
 } as const
 
 export type PositionScalarFieldEnum = (typeof PositionScalarFieldEnum)[keyof typeof PositionScalarFieldEnum]
+
+
+export const SystemScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  prefix: 'prefix',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SystemScalarFieldEnum = (typeof SystemScalarFieldEnum)[keyof typeof SystemScalarFieldEnum]
+
+
+export const SubsystemScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  type: 'type',
+  mandants: 'mandants',
+  systemId: 'systemId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SubsystemScalarFieldEnum = (typeof SubsystemScalarFieldEnum)[keyof typeof SubsystemScalarFieldEnum]
+
+
+export const ModuleScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ModuleScalarFieldEnum = (typeof ModuleScalarFieldEnum)[keyof typeof ModuleScalarFieldEnum]
+
+
+export const DevelopmentTypeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DevelopmentTypeScalarFieldEnum = (typeof DevelopmentTypeScalarFieldEnum)[keyof typeof DevelopmentTypeScalarFieldEnum]
+
+
+export const DevelopmentScalarFieldEnum = {
+  id: 'id',
+  moduleId: 'moduleId',
+  systemId: 'systemId',
+  typeId: 'typeId',
+  code: 'code',
+  number: 'number',
+  package: 'package',
+  run: 'run',
+  comments: 'comments',
+  inactive: 'inactive',
+  allocated: 'allocated',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DevelopmentScalarFieldEnum = (typeof DevelopmentScalarFieldEnum)[keyof typeof DevelopmentScalarFieldEnum]
 
 
 export const SortOrder = {
