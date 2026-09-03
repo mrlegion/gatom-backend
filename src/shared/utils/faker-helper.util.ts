@@ -18,3 +18,10 @@ export const generateUsernameWithFixedLength = (
 
 	return username
 }
+
+export const generateSystemArray = (length: number = 2) => {
+	let index = 0
+	while (index < length) {
+		const code = faker.string.alpha({ length: { min: 2, max: 4 } })
+	}
+}
