@@ -8,6 +8,7 @@ import {
 
 import { Position } from '../../../../prisma/generated/client'
 import { PositionRepository } from '../../../repositories'
+import { SystemFindByResponse } from '../system/dto'
 
 import {
 	CreatePositionResponse,

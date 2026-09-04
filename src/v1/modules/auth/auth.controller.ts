@@ -1,4 +1,3 @@
-import { UnauthenticatedException } from '@alexdevco/common'
 import {
 	Body,
 	Controller,
