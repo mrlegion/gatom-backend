@@ -4,11 +4,11 @@ import { PrismaClient } from './generated/client'
 
 const prismaClientSingleton = () => {
 	const adapter = new PrismaPg({
-		user: process.env.DATABASE_USER,
-		password: process.env.DATABASE_PASSWORD,
-		host: process.env.DATABASE_HOST,
+		user: String(process.env.DATABASE_USER),
+		password: String(process.env.DATABASE_PASSWORD),
+		host: String(process.env.DATABASE_HOST),
 		port: Number(process.env.DATABASE_PORT),
-		database: process.env.DATABASE_NAME
+		database: String(process.env.DATABASE_NAME)
 	})
 	return new PrismaClient({ adapter })
 }
