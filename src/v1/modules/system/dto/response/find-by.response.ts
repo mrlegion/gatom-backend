@@ -16,3 +16,17 @@ export class SystemFindByResponse {
 		system: System | null
 	}
 }
+
+export class SystemFindByManyResponse {
+	@ApiProperty({
+		title: 'Ответ на запрос поиска системы',
+		example: {
+			status: 'OK',
+			systems: []
+		}
+	})
+	public data: {
+		status: StatusResponse
+		systems: System[]
+	}
+}
