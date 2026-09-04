@@ -11,6 +11,7 @@ import {
 	CreateSystemResponse,
 	DeleteSystemResponse,
 	GetAllSystemResponse,
+	SystemFindByManyResponse,
 	SystemFindByResponse,
 	UpdateSystemRequest,
 	UpdateSystemResponse
@@ -27,7 +28,7 @@ export class SystemService {
 	 */
 	public async getAll(): Promise<GetAllSystemResponse> {
 		const systems = await this.systemRepository.getAll()
-
+		console.log(systems)
 		return {
 			data: {
 				status: systems.length ? 'OK' : 'NOT_FOUND',
@@ -83,6 +84,25 @@ export class SystemService {
 			data: {
 				status: system ? 'OK' : 'NOT_FOUND',
 				system
+			}
+		}
+	}
+
+	/**
+	 * Найти по префиксу системы
+	 *
+	 * @param prefix Префикс системы
+	 * @returns Массив найденых объектов или пустой массив, если данных нет
+	 */
+	public async findByPrefix(
+		prefix: string
+	): Promise<SystemFindByManyResponse> {
+		const systems = await this.systemRepository.findByPrefix(prefix)
+
+		return {
+			data: {
+				status: systems.length ? 'OK' : 'NOT_FOUND',
+				systems
 			}
 		}
 	}
