@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
 
 import { System } from '../../../prisma/generated/client'
 import {
@@ -10,7 +10,11 @@ import { PrismaService } from '../../services'
 
 @Injectable()
 export class SystemRepository {
-	public constructor(private readonly prisma: PrismaService) {}
+	private readonly _log: Logger
+
+	public constructor(private readonly prisma: PrismaService) {
+		this._log = new Logger(SystemRepository.name)
+	}
 
 	/**
 	 * Получить все записи систем
@@ -19,8 +23,10 @@ export class SystemRepository {
 	 */
 	public async getAll(): Promise<System[]> {
 		try {
-			return await prisma.system.findMany()
-		} catch {
+			return await this.prisma.system.findMany()
+		} catch (e) {
+			this._log.error(`METHOD [getAll]: ${e.message}`)
+			console.log(e)
 			return []
 		}
 	}
@@ -32,7 +38,7 @@ export class SystemRepository {
 	 * @returns - Найденый объект системы или Null
 	 */
 	public async findById(id: string): Promise<System | null> {
-		return await prisma.system.findUnique({
+		return await this.prisma.system.findUnique({
 			where: { id }
 		})
 	}
@@ -44,7 +50,7 @@ export class SystemRepository {
 	 * @returns - Найденый объект системы или Null
 	 */
 	public async findByCode(code: string): Promise<System | null> {
-		return await prisma.system.findUnique({
+		return await this.prisma.system.findUnique({
 			where: { code }
 		})
 	}
@@ -56,7 +62,7 @@ export class SystemRepository {
 	 * @returns - Найденый объект системы или Null
 	 */
 	public async findByName(name: string): Promise<System | null> {
-		return await prisma.system.findUnique({
+		return await this.prisma.system.findUnique({
 			where: { name }
 		})
 	}
@@ -65,12 +71,16 @@ export class SystemRepository {
 	 * Найти систему по префиксу
 	 *
 	 * @param prefix - Префикс системы
-	 * @returns - Найденый объект системы или Null
+	 * @returns - Массив объектов системы или Null
 	 */
-	public async findByPrefix(prefix: string): Promise<System | null> {
-		return await prisma.system.findUnique({
-			where: { prefix }
-		})
+	public async findByPrefix(prefix: string): Promise<System[]> {
+		try {
+			return await this.prisma.system.findMany({
+				where: { prefix }
+			})
+		} catch {
+			return []
+		}
 	}
 
 	/**
@@ -80,7 +90,7 @@ export class SystemRepository {
 	 * @returns - Созданный объект системы
 	 */
 	public async create(data: SystemCreateInput): Promise<System> {
-		return await prisma.system.create({ data })
+		return await this.prisma.system.create({ data })
 	}
 
 	/**
@@ -91,7 +101,7 @@ export class SystemRepository {
 	 * @returns - Обновленный объект системы
 	 */
 	public async update(id: string, data: SystemUpdateInput): Promise<System> {
-		return await prisma.system.update({
+		return await this.prisma.system.update({
 			where: { id },
 			data
 		})
@@ -105,7 +115,7 @@ export class SystemRepository {
 	 */
 	public async delete(id: string): Promise<boolean> {
 		try {
-			await prisma.system.delete({ where: { id } })
+			await this.prisma.system.delete({ where: { id } })
 			return true
 		} catch {
 			return false
