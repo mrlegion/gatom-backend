@@ -28,7 +28,6 @@ export class SystemService {
 	 */
 	public async getAll(): Promise<GetAllSystemResponse> {
 		const systems = await this.systemRepository.getAll()
-		console.log(systems)
 		return {
 			data: {
 				status: systems.length ? 'OK' : 'NOT_FOUND',
@@ -62,7 +61,6 @@ export class SystemService {
 	 */
 	public async findByCode(code: string): Promise<SystemFindByResponse> {
 		const system = await this.systemRepository.findByCode(code)
-		console.log(system)
 		return {
 			data: {
 				status: system ? 'OK' : 'NOT_FOUND',
