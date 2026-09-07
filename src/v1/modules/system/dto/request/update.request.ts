@@ -9,8 +9,7 @@ import {
 
 export class UpdateSystemRequest {
 	@ApiProperty({
-		type: 'string',
-		name: 'Код системы',
+		title: 'Код системы',
 		example: 'REA'
 	})
 	@IsString()
@@ -19,8 +18,7 @@ export class UpdateSystemRequest {
 	public code: string
 
 	@ApiProperty({
-		type: 'string',
-		name: 'Наименование системы',
+		title: 'Наименование системы',
 		example: 'Система РосЭнергоАтом (EED->EEQ->EEP)'
 	})
 	@IsString()
@@ -29,8 +27,7 @@ export class UpdateSystemRequest {
 	public name: string
 
 	@ApiProperty({
-		type: 'string',
-		name: 'Префикс системы',
+		title: 'Префикс системы',
 		example: 'ZEA'
 	})
 	@IsString()
