@@ -38,7 +38,7 @@ export class SystemRepository {
 	 * @returns - Найденый объект системы или Null
 	 */
 	public async findById(id: string): Promise<System | null> {
-		return await this.prisma.system.findUnique({
+		return this.prisma.system.findUnique({
 			where: { id }
 		})
 	}
@@ -50,7 +50,7 @@ export class SystemRepository {
 	 * @returns - Найденый объект системы или Null
 	 */
 	public async findByCode(code: string): Promise<System | null> {
-		return await this.prisma.system.findUnique({
+		return this.prisma.system.findUnique({
 			where: { code }
 		})
 	}
@@ -62,7 +62,7 @@ export class SystemRepository {
 	 * @returns - Найденый объект системы или Null
 	 */
 	public async findByName(name: string): Promise<System | null> {
-		return await this.prisma.system.findUnique({
+		return this.prisma.system.findUnique({
 			where: { name }
 		})
 	}

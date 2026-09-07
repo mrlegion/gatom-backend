@@ -62,7 +62,7 @@ export class SystemService {
 	 */
 	public async findByCode(code: string): Promise<SystemFindByResponse> {
 		const system = await this.systemRepository.findByCode(code)
-
+		console.log(system)
 		return {
 			data: {
 				status: system ? 'OK' : 'NOT_FOUND',
