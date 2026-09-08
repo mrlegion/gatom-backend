@@ -2,6 +2,9 @@ import { hash } from 'argon2'
 
 import { prisma } from '../prisma-client'
 
+/**
+ * Создание учётной записи Администратора
+ */
 export async function makeUser() {
 	const user = await prisma.user.create({
 		data: {
