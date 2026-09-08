@@ -13,9 +13,9 @@ import { SubsystemType } from '../../../../../../prisma/generated/enums'
 
 export class UpdateSubsystemRequest {
 	@ApiProperty({
-		type: 'string',
-		name: 'Код подсистемы',
-		example: 'EED'
+		title: 'Код подсистемы',
+		example: 'EED',
+		required: true
 	})
 	@IsString()
 	@Length(2, 10)
@@ -23,9 +23,9 @@ export class UpdateSubsystemRequest {
 	public code: string
 
 	@ApiProperty({
-		type: 'string',
-		name: 'Наименование подсистемы',
-		example: 'Разработка РЭА'
+		title: 'Наименование подсистемы',
+		example: 'Разработка РЭА',
+		required: true
 	})
 	@IsString()
 	@Length(3, 60)
@@ -33,8 +33,7 @@ export class UpdateSubsystemRequest {
 	public name: string
 
 	@ApiProperty({
-		enum: SubsystemType,
-		name: 'Тип подсистемы',
+		title: 'Тип подсистемы',
 		example: SubsystemType.DEVELOPMENT,
 		required: false
 	})
@@ -43,8 +42,7 @@ export class UpdateSubsystemRequest {
 	public type?: SubsystemType
 
 	@ApiProperty({
-		type: [String],
-		name: 'Мандаты подсистемы',
+		title: 'Мандаты подсистемы',
 		example: ['100', '120'],
 		required: false
 	})
@@ -54,9 +52,9 @@ export class UpdateSubsystemRequest {
 	public mandants?: string[]
 
 	@ApiProperty({
-		type: 'string',
-		name: 'Уникальный идентификатор системы',
-		example: faker.string.uuid()
+		title: 'Уникальный идентификатор системы',
+		example: faker.string.uuid(),
+		required: true
 	})
 	@IsString()
 	@IsNotEmpty()

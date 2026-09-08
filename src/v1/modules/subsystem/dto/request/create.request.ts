@@ -13,8 +13,7 @@ import { SubsystemType } from '../../../../../../prisma/generated/enums'
 
 export class CreateSubsystemRequest {
 	@ApiProperty({
-		type: 'string',
-		name: 'Код подсистемы',
+		title: 'Код подсистемы',
 		example: 'EED'
 	})
 	@IsString()
@@ -23,8 +22,7 @@ export class CreateSubsystemRequest {
 	public code: string
 
 	@ApiProperty({
-		type: 'string',
-		name: 'Наименование подсистемы',
+		title: 'Наименование подсистемы',
 		example: 'Разработка РЭА'
 	})
 	@IsString()
@@ -33,8 +31,7 @@ export class CreateSubsystemRequest {
 	public name: string
 
 	@ApiProperty({
-		enum: SubsystemType,
-		name: 'Тип подсистемы',
+		title: 'Тип подсистемы',
 		example: SubsystemType.DEVELOPMENT,
 		required: false
 	})
@@ -43,8 +40,7 @@ export class CreateSubsystemRequest {
 	public type?: SubsystemType
 
 	@ApiProperty({
-		type: [String],
-		name: 'Мандаты подсистемы',
+		title: 'Мандаты подсистемы',
 		example: ['100', '200'],
 		required: false
 	})
@@ -54,8 +50,7 @@ export class CreateSubsystemRequest {
 	public mandants?: string[]
 
 	@ApiProperty({
-		type: 'string',
-		name: 'Уникальный идентификатор системы',
+		title: 'Уникальный идентификатор системы',
 		example: faker.string.uuid()
 	})
 	@IsString()
