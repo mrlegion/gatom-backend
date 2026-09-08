@@ -3,9 +3,9 @@ import { IsNotEmpty, IsString, Length } from 'class-validator'
 
 export class CreateDevelopmentTypeRequest {
 	@ApiProperty({
-		type: 'string',
-		name: 'Код типа доработки',
-		example: 'REP'
+		title: 'Код типа доработки',
+		example: 'REP',
+		required: true
 	})
 	@IsString()
 	@Length(2, 10)
@@ -13,9 +13,9 @@ export class CreateDevelopmentTypeRequest {
 	public code: string
 
 	@ApiProperty({
-		type: 'string',
-		name: 'Наименование типа доработки',
-		example: 'Отчёт'
+		title: 'Наименование типа доработки',
+		example: 'Отчёт',
+		required: true
 	})
 	@IsString()
 	@Length(3, 60)
