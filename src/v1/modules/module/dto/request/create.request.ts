@@ -3,9 +3,9 @@ import { IsNotEmpty, IsString, Length } from 'class-validator'
 
 export class CreateModuleRequest {
 	@ApiProperty({
-		type: 'string',
-		name: 'Код модуля',
-		example: 'MM'
+		title: 'Код модуля',
+		example: 'MM',
+		required: true
 	})
 	@IsString()
 	@Length(2, 10)
@@ -13,9 +13,9 @@ export class CreateModuleRequest {
 	public code: string
 
 	@ApiProperty({
-		type: 'string',
-		name: 'Наименование модуля',
-		example: 'Управление материалами'
+		title: 'Наименование модуля',
+		example: 'Управление материалами',
+		required: true
 	})
 	@IsString()
 	@Length(3, 60)

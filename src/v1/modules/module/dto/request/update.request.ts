@@ -3,8 +3,7 @@ import { IsNotEmpty, IsString, Length } from 'class-validator'
 
 export class UpdateModuleRequest {
 	@ApiProperty({
-		type: 'string',
-		name: 'Код модуля',
+		title: 'Код модуля',
 		example: 'MM'
 	})
 	@IsString()
@@ -13,8 +12,7 @@ export class UpdateModuleRequest {
 	public code: string
 
 	@ApiProperty({
-		type: 'string',
-		name: 'Наименование модуля',
+		title: 'Наименование модуля',
 		example: 'Управление материалами'
 	})
 	@IsString()
