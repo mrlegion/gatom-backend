@@ -36,6 +36,7 @@ export type DevelopmentMinAggregateOutputType = {
   comments: string | null
   inactive: boolean | null
   allocated: boolean | null
+  allocatedFromId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,6 +53,7 @@ export type DevelopmentMaxAggregateOutputType = {
   comments: string | null
   inactive: boolean | null
   allocated: boolean | null
+  allocatedFromId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -68,6 +70,7 @@ export type DevelopmentCountAggregateOutputType = {
   comments: number
   inactive: number
   allocated: number
+  allocatedFromId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -86,6 +89,7 @@ export type DevelopmentMinAggregateInputType = {
   comments?: true
   inactive?: true
   allocated?: true
+  allocatedFromId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -102,6 +106,7 @@ export type DevelopmentMaxAggregateInputType = {
   comments?: true
   inactive?: true
   allocated?: true
+  allocatedFromId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -118,6 +123,7 @@ export type DevelopmentCountAggregateInputType = {
   comments?: true
   inactive?: true
   allocated?: true
+  allocatedFromId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -207,6 +213,7 @@ export type DevelopmentGroupByOutputType = {
   comments: string
   inactive: boolean
   allocated: boolean
+  allocatedFromId: string | null
   createdAt: Date
   updatedAt: Date
   _count: DevelopmentCountAggregateOutputType | null
@@ -244,11 +251,14 @@ export type DevelopmentWhereInput = {
   comments?: Prisma.StringFilter<"Development"> | string
   inactive?: Prisma.BoolFilter<"Development"> | boolean
   allocated?: Prisma.BoolFilter<"Development"> | boolean
+  allocatedFromId?: Prisma.StringNullableFilter<"Development"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Development"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Development"> | Date | string
   module?: Prisma.XOR<Prisma.ModuleScalarRelationFilter, Prisma.ModuleWhereInput>
   system?: Prisma.XOR<Prisma.SystemScalarRelationFilter, Prisma.SystemWhereInput>
   type?: Prisma.XOR<Prisma.DevelopmentTypeScalarRelationFilter, Prisma.DevelopmentTypeWhereInput>
+  allocatedFrom?: Prisma.XOR<Prisma.DevelopmentNullableScalarRelationFilter, Prisma.DevelopmentWhereInput> | null
+  allocatedTo?: Prisma.DevelopmentListRelationFilter
 }
 
 export type DevelopmentOrderByWithRelationInput = {
@@ -263,11 +273,14 @@ export type DevelopmentOrderByWithRelationInput = {
   comments?: Prisma.SortOrder
   inactive?: Prisma.SortOrder
   allocated?: Prisma.SortOrder
+  allocatedFromId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   module?: Prisma.ModuleOrderByWithRelationInput
   system?: Prisma.SystemOrderByWithRelationInput
   type?: Prisma.DevelopmentTypeOrderByWithRelationInput
+  allocatedFrom?: Prisma.DevelopmentOrderByWithRelationInput
+  allocatedTo?: Prisma.DevelopmentOrderByRelationAggregateInput
 }
 
 export type DevelopmentWhereUniqueInput = Prisma.AtLeast<{
@@ -285,11 +298,14 @@ export type DevelopmentWhereUniqueInput = Prisma.AtLeast<{
   comments?: Prisma.StringFilter<"Development"> | string
   inactive?: Prisma.BoolFilter<"Development"> | boolean
   allocated?: Prisma.BoolFilter<"Development"> | boolean
+  allocatedFromId?: Prisma.StringNullableFilter<"Development"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Development"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Development"> | Date | string
   module?: Prisma.XOR<Prisma.ModuleScalarRelationFilter, Prisma.ModuleWhereInput>
   system?: Prisma.XOR<Prisma.SystemScalarRelationFilter, Prisma.SystemWhereInput>
   type?: Prisma.XOR<Prisma.DevelopmentTypeScalarRelationFilter, Prisma.DevelopmentTypeWhereInput>
+  allocatedFrom?: Prisma.XOR<Prisma.DevelopmentNullableScalarRelationFilter, Prisma.DevelopmentWhereInput> | null
+  allocatedTo?: Prisma.DevelopmentListRelationFilter
 }, "id" | "code" | "package">
 
 export type DevelopmentOrderByWithAggregationInput = {
@@ -304,6 +320,7 @@ export type DevelopmentOrderByWithAggregationInput = {
   comments?: Prisma.SortOrder
   inactive?: Prisma.SortOrder
   allocated?: Prisma.SortOrder
+  allocatedFromId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.DevelopmentCountOrderByAggregateInput
@@ -326,6 +343,7 @@ export type DevelopmentScalarWhereWithAggregatesInput = {
   comments?: Prisma.StringWithAggregatesFilter<"Development"> | string
   inactive?: Prisma.BoolWithAggregatesFilter<"Development"> | boolean
   allocated?: Prisma.BoolWithAggregatesFilter<"Development"> | boolean
+  allocatedFromId?: Prisma.StringNullableWithAggregatesFilter<"Development"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Development"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Development"> | Date | string
 }
@@ -344,6 +362,8 @@ export type DevelopmentCreateInput = {
   module: Prisma.ModuleCreateNestedOneWithoutDevelopmentsInput
   system: Prisma.SystemCreateNestedOneWithoutDevelopmentsInput
   type: Prisma.DevelopmentTypeCreateNestedOneWithoutDevelopmentsInput
+  allocatedFrom?: Prisma.DevelopmentCreateNestedOneWithoutAllocatedToInput
+  allocatedTo?: Prisma.DevelopmentCreateNestedManyWithoutAllocatedFromInput
 }
 
 export type DevelopmentUncheckedCreateInput = {
@@ -358,8 +378,10 @@ export type DevelopmentUncheckedCreateInput = {
   comments: string
   inactive?: boolean
   allocated?: boolean
+  allocatedFromId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  allocatedTo?: Prisma.DevelopmentUncheckedCreateNestedManyWithoutAllocatedFromInput
 }
 
 export type DevelopmentUpdateInput = {
@@ -376,6 +398,8 @@ export type DevelopmentUpdateInput = {
   module?: Prisma.ModuleUpdateOneRequiredWithoutDevelopmentsNestedInput
   system?: Prisma.SystemUpdateOneRequiredWithoutDevelopmentsNestedInput
   type?: Prisma.DevelopmentTypeUpdateOneRequiredWithoutDevelopmentsNestedInput
+  allocatedFrom?: Prisma.DevelopmentUpdateOneWithoutAllocatedToNestedInput
+  allocatedTo?: Prisma.DevelopmentUpdateManyWithoutAllocatedFromNestedInput
 }
 
 export type DevelopmentUncheckedUpdateInput = {
@@ -390,8 +414,10 @@ export type DevelopmentUncheckedUpdateInput = {
   comments?: Prisma.StringFieldUpdateOperationsInput | string
   inactive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allocated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  allocatedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allocatedTo?: Prisma.DevelopmentUncheckedUpdateManyWithoutAllocatedFromNestedInput
 }
 
 export type DevelopmentCreateManyInput = {
@@ -406,6 +432,7 @@ export type DevelopmentCreateManyInput = {
   comments: string
   inactive?: boolean
   allocated?: boolean
+  allocatedFromId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -435,6 +462,7 @@ export type DevelopmentUncheckedUpdateManyInput = {
   comments?: Prisma.StringFieldUpdateOperationsInput | string
   inactive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allocated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  allocatedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -449,6 +477,11 @@ export type DevelopmentOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type DevelopmentNullableScalarRelationFilter = {
+  is?: Prisma.DevelopmentWhereInput | null
+  isNot?: Prisma.DevelopmentWhereInput | null
+}
+
 export type DevelopmentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   moduleId?: Prisma.SortOrder
@@ -461,6 +494,7 @@ export type DevelopmentCountOrderByAggregateInput = {
   comments?: Prisma.SortOrder
   inactive?: Prisma.SortOrder
   allocated?: Prisma.SortOrder
+  allocatedFromId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -477,6 +511,7 @@ export type DevelopmentMaxOrderByAggregateInput = {
   comments?: Prisma.SortOrder
   inactive?: Prisma.SortOrder
   allocated?: Prisma.SortOrder
+  allocatedFromId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -493,6 +528,7 @@ export type DevelopmentMinOrderByAggregateInput = {
   comments?: Prisma.SortOrder
   inactive?: Prisma.SortOrder
   allocated?: Prisma.SortOrder
+  allocatedFromId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -623,6 +659,64 @@ export type DevelopmentUncheckedUpdateManyWithoutTypeNestedInput = {
   deleteMany?: Prisma.DevelopmentScalarWhereInput | Prisma.DevelopmentScalarWhereInput[]
 }
 
+export type DevelopmentCreateNestedOneWithoutAllocatedToInput = {
+  create?: Prisma.XOR<Prisma.DevelopmentCreateWithoutAllocatedToInput, Prisma.DevelopmentUncheckedCreateWithoutAllocatedToInput>
+  connectOrCreate?: Prisma.DevelopmentCreateOrConnectWithoutAllocatedToInput
+  connect?: Prisma.DevelopmentWhereUniqueInput
+}
+
+export type DevelopmentCreateNestedManyWithoutAllocatedFromInput = {
+  create?: Prisma.XOR<Prisma.DevelopmentCreateWithoutAllocatedFromInput, Prisma.DevelopmentUncheckedCreateWithoutAllocatedFromInput> | Prisma.DevelopmentCreateWithoutAllocatedFromInput[] | Prisma.DevelopmentUncheckedCreateWithoutAllocatedFromInput[]
+  connectOrCreate?: Prisma.DevelopmentCreateOrConnectWithoutAllocatedFromInput | Prisma.DevelopmentCreateOrConnectWithoutAllocatedFromInput[]
+  createMany?: Prisma.DevelopmentCreateManyAllocatedFromInputEnvelope
+  connect?: Prisma.DevelopmentWhereUniqueInput | Prisma.DevelopmentWhereUniqueInput[]
+}
+
+export type DevelopmentUncheckedCreateNestedManyWithoutAllocatedFromInput = {
+  create?: Prisma.XOR<Prisma.DevelopmentCreateWithoutAllocatedFromInput, Prisma.DevelopmentUncheckedCreateWithoutAllocatedFromInput> | Prisma.DevelopmentCreateWithoutAllocatedFromInput[] | Prisma.DevelopmentUncheckedCreateWithoutAllocatedFromInput[]
+  connectOrCreate?: Prisma.DevelopmentCreateOrConnectWithoutAllocatedFromInput | Prisma.DevelopmentCreateOrConnectWithoutAllocatedFromInput[]
+  createMany?: Prisma.DevelopmentCreateManyAllocatedFromInputEnvelope
+  connect?: Prisma.DevelopmentWhereUniqueInput | Prisma.DevelopmentWhereUniqueInput[]
+}
+
+export type DevelopmentUpdateOneWithoutAllocatedToNestedInput = {
+  create?: Prisma.XOR<Prisma.DevelopmentCreateWithoutAllocatedToInput, Prisma.DevelopmentUncheckedCreateWithoutAllocatedToInput>
+  connectOrCreate?: Prisma.DevelopmentCreateOrConnectWithoutAllocatedToInput
+  upsert?: Prisma.DevelopmentUpsertWithoutAllocatedToInput
+  disconnect?: Prisma.DevelopmentWhereInput | boolean
+  delete?: Prisma.DevelopmentWhereInput | boolean
+  connect?: Prisma.DevelopmentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DevelopmentUpdateToOneWithWhereWithoutAllocatedToInput, Prisma.DevelopmentUpdateWithoutAllocatedToInput>, Prisma.DevelopmentUncheckedUpdateWithoutAllocatedToInput>
+}
+
+export type DevelopmentUpdateManyWithoutAllocatedFromNestedInput = {
+  create?: Prisma.XOR<Prisma.DevelopmentCreateWithoutAllocatedFromInput, Prisma.DevelopmentUncheckedCreateWithoutAllocatedFromInput> | Prisma.DevelopmentCreateWithoutAllocatedFromInput[] | Prisma.DevelopmentUncheckedCreateWithoutAllocatedFromInput[]
+  connectOrCreate?: Prisma.DevelopmentCreateOrConnectWithoutAllocatedFromInput | Prisma.DevelopmentCreateOrConnectWithoutAllocatedFromInput[]
+  upsert?: Prisma.DevelopmentUpsertWithWhereUniqueWithoutAllocatedFromInput | Prisma.DevelopmentUpsertWithWhereUniqueWithoutAllocatedFromInput[]
+  createMany?: Prisma.DevelopmentCreateManyAllocatedFromInputEnvelope
+  set?: Prisma.DevelopmentWhereUniqueInput | Prisma.DevelopmentWhereUniqueInput[]
+  disconnect?: Prisma.DevelopmentWhereUniqueInput | Prisma.DevelopmentWhereUniqueInput[]
+  delete?: Prisma.DevelopmentWhereUniqueInput | Prisma.DevelopmentWhereUniqueInput[]
+  connect?: Prisma.DevelopmentWhereUniqueInput | Prisma.DevelopmentWhereUniqueInput[]
+  update?: Prisma.DevelopmentUpdateWithWhereUniqueWithoutAllocatedFromInput | Prisma.DevelopmentUpdateWithWhereUniqueWithoutAllocatedFromInput[]
+  updateMany?: Prisma.DevelopmentUpdateManyWithWhereWithoutAllocatedFromInput | Prisma.DevelopmentUpdateManyWithWhereWithoutAllocatedFromInput[]
+  deleteMany?: Prisma.DevelopmentScalarWhereInput | Prisma.DevelopmentScalarWhereInput[]
+}
+
+export type DevelopmentUncheckedUpdateManyWithoutAllocatedFromNestedInput = {
+  create?: Prisma.XOR<Prisma.DevelopmentCreateWithoutAllocatedFromInput, Prisma.DevelopmentUncheckedCreateWithoutAllocatedFromInput> | Prisma.DevelopmentCreateWithoutAllocatedFromInput[] | Prisma.DevelopmentUncheckedCreateWithoutAllocatedFromInput[]
+  connectOrCreate?: Prisma.DevelopmentCreateOrConnectWithoutAllocatedFromInput | Prisma.DevelopmentCreateOrConnectWithoutAllocatedFromInput[]
+  upsert?: Prisma.DevelopmentUpsertWithWhereUniqueWithoutAllocatedFromInput | Prisma.DevelopmentUpsertWithWhereUniqueWithoutAllocatedFromInput[]
+  createMany?: Prisma.DevelopmentCreateManyAllocatedFromInputEnvelope
+  set?: Prisma.DevelopmentWhereUniqueInput | Prisma.DevelopmentWhereUniqueInput[]
+  disconnect?: Prisma.DevelopmentWhereUniqueInput | Prisma.DevelopmentWhereUniqueInput[]
+  delete?: Prisma.DevelopmentWhereUniqueInput | Prisma.DevelopmentWhereUniqueInput[]
+  connect?: Prisma.DevelopmentWhereUniqueInput | Prisma.DevelopmentWhereUniqueInput[]
+  update?: Prisma.DevelopmentUpdateWithWhereUniqueWithoutAllocatedFromInput | Prisma.DevelopmentUpdateWithWhereUniqueWithoutAllocatedFromInput[]
+  updateMany?: Prisma.DevelopmentUpdateManyWithWhereWithoutAllocatedFromInput | Prisma.DevelopmentUpdateManyWithWhereWithoutAllocatedFromInput[]
+  deleteMany?: Prisma.DevelopmentScalarWhereInput | Prisma.DevelopmentScalarWhereInput[]
+}
+
 export type DevelopmentCreateWithoutSystemInput = {
   id?: string
   code: string
@@ -636,6 +730,8 @@ export type DevelopmentCreateWithoutSystemInput = {
   updatedAt?: Date | string
   module: Prisma.ModuleCreateNestedOneWithoutDevelopmentsInput
   type: Prisma.DevelopmentTypeCreateNestedOneWithoutDevelopmentsInput
+  allocatedFrom?: Prisma.DevelopmentCreateNestedOneWithoutAllocatedToInput
+  allocatedTo?: Prisma.DevelopmentCreateNestedManyWithoutAllocatedFromInput
 }
 
 export type DevelopmentUncheckedCreateWithoutSystemInput = {
@@ -649,8 +745,10 @@ export type DevelopmentUncheckedCreateWithoutSystemInput = {
   comments: string
   inactive?: boolean
   allocated?: boolean
+  allocatedFromId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  allocatedTo?: Prisma.DevelopmentUncheckedCreateNestedManyWithoutAllocatedFromInput
 }
 
 export type DevelopmentCreateOrConnectWithoutSystemInput = {
@@ -694,6 +792,7 @@ export type DevelopmentScalarWhereInput = {
   comments?: Prisma.StringFilter<"Development"> | string
   inactive?: Prisma.BoolFilter<"Development"> | boolean
   allocated?: Prisma.BoolFilter<"Development"> | boolean
+  allocatedFromId?: Prisma.StringNullableFilter<"Development"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Development"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Development"> | Date | string
 }
@@ -711,6 +810,8 @@ export type DevelopmentCreateWithoutModuleInput = {
   updatedAt?: Date | string
   system: Prisma.SystemCreateNestedOneWithoutDevelopmentsInput
   type: Prisma.DevelopmentTypeCreateNestedOneWithoutDevelopmentsInput
+  allocatedFrom?: Prisma.DevelopmentCreateNestedOneWithoutAllocatedToInput
+  allocatedTo?: Prisma.DevelopmentCreateNestedManyWithoutAllocatedFromInput
 }
 
 export type DevelopmentUncheckedCreateWithoutModuleInput = {
@@ -724,8 +825,10 @@ export type DevelopmentUncheckedCreateWithoutModuleInput = {
   comments: string
   inactive?: boolean
   allocated?: boolean
+  allocatedFromId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  allocatedTo?: Prisma.DevelopmentUncheckedCreateNestedManyWithoutAllocatedFromInput
 }
 
 export type DevelopmentCreateOrConnectWithoutModuleInput = {
@@ -767,6 +870,8 @@ export type DevelopmentCreateWithoutTypeInput = {
   updatedAt?: Date | string
   module: Prisma.ModuleCreateNestedOneWithoutDevelopmentsInput
   system: Prisma.SystemCreateNestedOneWithoutDevelopmentsInput
+  allocatedFrom?: Prisma.DevelopmentCreateNestedOneWithoutAllocatedToInput
+  allocatedTo?: Prisma.DevelopmentCreateNestedManyWithoutAllocatedFromInput
 }
 
 export type DevelopmentUncheckedCreateWithoutTypeInput = {
@@ -780,8 +885,10 @@ export type DevelopmentUncheckedCreateWithoutTypeInput = {
   comments: string
   inactive?: boolean
   allocated?: boolean
+  allocatedFromId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  allocatedTo?: Prisma.DevelopmentUncheckedCreateNestedManyWithoutAllocatedFromInput
 }
 
 export type DevelopmentCreateOrConnectWithoutTypeInput = {
@@ -810,6 +917,150 @@ export type DevelopmentUpdateManyWithWhereWithoutTypeInput = {
   data: Prisma.XOR<Prisma.DevelopmentUpdateManyMutationInput, Prisma.DevelopmentUncheckedUpdateManyWithoutTypeInput>
 }
 
+export type DevelopmentCreateWithoutAllocatedToInput = {
+  id?: string
+  code: string
+  number: string
+  package: string
+  run: string
+  comments: string
+  inactive?: boolean
+  allocated?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  module: Prisma.ModuleCreateNestedOneWithoutDevelopmentsInput
+  system: Prisma.SystemCreateNestedOneWithoutDevelopmentsInput
+  type: Prisma.DevelopmentTypeCreateNestedOneWithoutDevelopmentsInput
+  allocatedFrom?: Prisma.DevelopmentCreateNestedOneWithoutAllocatedToInput
+}
+
+export type DevelopmentUncheckedCreateWithoutAllocatedToInput = {
+  id?: string
+  moduleId: string
+  systemId: string
+  typeId: string
+  code: string
+  number: string
+  package: string
+  run: string
+  comments: string
+  inactive?: boolean
+  allocated?: boolean
+  allocatedFromId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type DevelopmentCreateOrConnectWithoutAllocatedToInput = {
+  where: Prisma.DevelopmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.DevelopmentCreateWithoutAllocatedToInput, Prisma.DevelopmentUncheckedCreateWithoutAllocatedToInput>
+}
+
+export type DevelopmentCreateWithoutAllocatedFromInput = {
+  id?: string
+  code: string
+  number: string
+  package: string
+  run: string
+  comments: string
+  inactive?: boolean
+  allocated?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  module: Prisma.ModuleCreateNestedOneWithoutDevelopmentsInput
+  system: Prisma.SystemCreateNestedOneWithoutDevelopmentsInput
+  type: Prisma.DevelopmentTypeCreateNestedOneWithoutDevelopmentsInput
+  allocatedTo?: Prisma.DevelopmentCreateNestedManyWithoutAllocatedFromInput
+}
+
+export type DevelopmentUncheckedCreateWithoutAllocatedFromInput = {
+  id?: string
+  moduleId: string
+  systemId: string
+  typeId: string
+  code: string
+  number: string
+  package: string
+  run: string
+  comments: string
+  inactive?: boolean
+  allocated?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allocatedTo?: Prisma.DevelopmentUncheckedCreateNestedManyWithoutAllocatedFromInput
+}
+
+export type DevelopmentCreateOrConnectWithoutAllocatedFromInput = {
+  where: Prisma.DevelopmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.DevelopmentCreateWithoutAllocatedFromInput, Prisma.DevelopmentUncheckedCreateWithoutAllocatedFromInput>
+}
+
+export type DevelopmentCreateManyAllocatedFromInputEnvelope = {
+  data: Prisma.DevelopmentCreateManyAllocatedFromInput | Prisma.DevelopmentCreateManyAllocatedFromInput[]
+  skipDuplicates?: boolean
+}
+
+export type DevelopmentUpsertWithoutAllocatedToInput = {
+  update: Prisma.XOR<Prisma.DevelopmentUpdateWithoutAllocatedToInput, Prisma.DevelopmentUncheckedUpdateWithoutAllocatedToInput>
+  create: Prisma.XOR<Prisma.DevelopmentCreateWithoutAllocatedToInput, Prisma.DevelopmentUncheckedCreateWithoutAllocatedToInput>
+  where?: Prisma.DevelopmentWhereInput
+}
+
+export type DevelopmentUpdateToOneWithWhereWithoutAllocatedToInput = {
+  where?: Prisma.DevelopmentWhereInput
+  data: Prisma.XOR<Prisma.DevelopmentUpdateWithoutAllocatedToInput, Prisma.DevelopmentUncheckedUpdateWithoutAllocatedToInput>
+}
+
+export type DevelopmentUpdateWithoutAllocatedToInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  package?: Prisma.StringFieldUpdateOperationsInput | string
+  run?: Prisma.StringFieldUpdateOperationsInput | string
+  comments?: Prisma.StringFieldUpdateOperationsInput | string
+  inactive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  allocated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  module?: Prisma.ModuleUpdateOneRequiredWithoutDevelopmentsNestedInput
+  system?: Prisma.SystemUpdateOneRequiredWithoutDevelopmentsNestedInput
+  type?: Prisma.DevelopmentTypeUpdateOneRequiredWithoutDevelopmentsNestedInput
+  allocatedFrom?: Prisma.DevelopmentUpdateOneWithoutAllocatedToNestedInput
+}
+
+export type DevelopmentUncheckedUpdateWithoutAllocatedToInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  moduleId?: Prisma.StringFieldUpdateOperationsInput | string
+  systemId?: Prisma.StringFieldUpdateOperationsInput | string
+  typeId?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  package?: Prisma.StringFieldUpdateOperationsInput | string
+  run?: Prisma.StringFieldUpdateOperationsInput | string
+  comments?: Prisma.StringFieldUpdateOperationsInput | string
+  inactive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  allocated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  allocatedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type DevelopmentUpsertWithWhereUniqueWithoutAllocatedFromInput = {
+  where: Prisma.DevelopmentWhereUniqueInput
+  update: Prisma.XOR<Prisma.DevelopmentUpdateWithoutAllocatedFromInput, Prisma.DevelopmentUncheckedUpdateWithoutAllocatedFromInput>
+  create: Prisma.XOR<Prisma.DevelopmentCreateWithoutAllocatedFromInput, Prisma.DevelopmentUncheckedCreateWithoutAllocatedFromInput>
+}
+
+export type DevelopmentUpdateWithWhereUniqueWithoutAllocatedFromInput = {
+  where: Prisma.DevelopmentWhereUniqueInput
+  data: Prisma.XOR<Prisma.DevelopmentUpdateWithoutAllocatedFromInput, Prisma.DevelopmentUncheckedUpdateWithoutAllocatedFromInput>
+}
+
+export type DevelopmentUpdateManyWithWhereWithoutAllocatedFromInput = {
+  where: Prisma.DevelopmentScalarWhereInput
+  data: Prisma.XOR<Prisma.DevelopmentUpdateManyMutationInput, Prisma.DevelopmentUncheckedUpdateManyWithoutAllocatedFromInput>
+}
+
 export type DevelopmentCreateManySystemInput = {
   id?: string
   moduleId: string
@@ -821,6 +1072,7 @@ export type DevelopmentCreateManySystemInput = {
   comments: string
   inactive?: boolean
   allocated?: boolean
+  allocatedFromId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -838,6 +1090,8 @@ export type DevelopmentUpdateWithoutSystemInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   module?: Prisma.ModuleUpdateOneRequiredWithoutDevelopmentsNestedInput
   type?: Prisma.DevelopmentTypeUpdateOneRequiredWithoutDevelopmentsNestedInput
+  allocatedFrom?: Prisma.DevelopmentUpdateOneWithoutAllocatedToNestedInput
+  allocatedTo?: Prisma.DevelopmentUpdateManyWithoutAllocatedFromNestedInput
 }
 
 export type DevelopmentUncheckedUpdateWithoutSystemInput = {
@@ -851,8 +1105,10 @@ export type DevelopmentUncheckedUpdateWithoutSystemInput = {
   comments?: Prisma.StringFieldUpdateOperationsInput | string
   inactive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allocated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  allocatedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allocatedTo?: Prisma.DevelopmentUncheckedUpdateManyWithoutAllocatedFromNestedInput
 }
 
 export type DevelopmentUncheckedUpdateManyWithoutSystemInput = {
@@ -866,6 +1122,7 @@ export type DevelopmentUncheckedUpdateManyWithoutSystemInput = {
   comments?: Prisma.StringFieldUpdateOperationsInput | string
   inactive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allocated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  allocatedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -881,6 +1138,7 @@ export type DevelopmentCreateManyModuleInput = {
   comments: string
   inactive?: boolean
   allocated?: boolean
+  allocatedFromId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -898,6 +1156,8 @@ export type DevelopmentUpdateWithoutModuleInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   system?: Prisma.SystemUpdateOneRequiredWithoutDevelopmentsNestedInput
   type?: Prisma.DevelopmentTypeUpdateOneRequiredWithoutDevelopmentsNestedInput
+  allocatedFrom?: Prisma.DevelopmentUpdateOneWithoutAllocatedToNestedInput
+  allocatedTo?: Prisma.DevelopmentUpdateManyWithoutAllocatedFromNestedInput
 }
 
 export type DevelopmentUncheckedUpdateWithoutModuleInput = {
@@ -911,8 +1171,10 @@ export type DevelopmentUncheckedUpdateWithoutModuleInput = {
   comments?: Prisma.StringFieldUpdateOperationsInput | string
   inactive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allocated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  allocatedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allocatedTo?: Prisma.DevelopmentUncheckedUpdateManyWithoutAllocatedFromNestedInput
 }
 
 export type DevelopmentUncheckedUpdateManyWithoutModuleInput = {
@@ -926,6 +1188,7 @@ export type DevelopmentUncheckedUpdateManyWithoutModuleInput = {
   comments?: Prisma.StringFieldUpdateOperationsInput | string
   inactive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allocated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  allocatedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -941,6 +1204,7 @@ export type DevelopmentCreateManyTypeInput = {
   comments: string
   inactive?: boolean
   allocated?: boolean
+  allocatedFromId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -958,6 +1222,8 @@ export type DevelopmentUpdateWithoutTypeInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   module?: Prisma.ModuleUpdateOneRequiredWithoutDevelopmentsNestedInput
   system?: Prisma.SystemUpdateOneRequiredWithoutDevelopmentsNestedInput
+  allocatedFrom?: Prisma.DevelopmentUpdateOneWithoutAllocatedToNestedInput
+  allocatedTo?: Prisma.DevelopmentUpdateManyWithoutAllocatedFromNestedInput
 }
 
 export type DevelopmentUncheckedUpdateWithoutTypeInput = {
@@ -971,8 +1237,10 @@ export type DevelopmentUncheckedUpdateWithoutTypeInput = {
   comments?: Prisma.StringFieldUpdateOperationsInput | string
   inactive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allocated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  allocatedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allocatedTo?: Prisma.DevelopmentUncheckedUpdateManyWithoutAllocatedFromNestedInput
 }
 
 export type DevelopmentUncheckedUpdateManyWithoutTypeInput = {
@@ -986,10 +1254,106 @@ export type DevelopmentUncheckedUpdateManyWithoutTypeInput = {
   comments?: Prisma.StringFieldUpdateOperationsInput | string
   inactive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allocated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  allocatedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+export type DevelopmentCreateManyAllocatedFromInput = {
+  id?: string
+  moduleId: string
+  systemId: string
+  typeId: string
+  code: string
+  number: string
+  package: string
+  run: string
+  comments: string
+  inactive?: boolean
+  allocated?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type DevelopmentUpdateWithoutAllocatedFromInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  package?: Prisma.StringFieldUpdateOperationsInput | string
+  run?: Prisma.StringFieldUpdateOperationsInput | string
+  comments?: Prisma.StringFieldUpdateOperationsInput | string
+  inactive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  allocated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  module?: Prisma.ModuleUpdateOneRequiredWithoutDevelopmentsNestedInput
+  system?: Prisma.SystemUpdateOneRequiredWithoutDevelopmentsNestedInput
+  type?: Prisma.DevelopmentTypeUpdateOneRequiredWithoutDevelopmentsNestedInput
+  allocatedTo?: Prisma.DevelopmentUpdateManyWithoutAllocatedFromNestedInput
+}
+
+export type DevelopmentUncheckedUpdateWithoutAllocatedFromInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  moduleId?: Prisma.StringFieldUpdateOperationsInput | string
+  systemId?: Prisma.StringFieldUpdateOperationsInput | string
+  typeId?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  package?: Prisma.StringFieldUpdateOperationsInput | string
+  run?: Prisma.StringFieldUpdateOperationsInput | string
+  comments?: Prisma.StringFieldUpdateOperationsInput | string
+  inactive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  allocated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allocatedTo?: Prisma.DevelopmentUncheckedUpdateManyWithoutAllocatedFromNestedInput
+}
+
+export type DevelopmentUncheckedUpdateManyWithoutAllocatedFromInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  moduleId?: Prisma.StringFieldUpdateOperationsInput | string
+  systemId?: Prisma.StringFieldUpdateOperationsInput | string
+  typeId?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.StringFieldUpdateOperationsInput | string
+  package?: Prisma.StringFieldUpdateOperationsInput | string
+  run?: Prisma.StringFieldUpdateOperationsInput | string
+  comments?: Prisma.StringFieldUpdateOperationsInput | string
+  inactive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  allocated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type DevelopmentCountOutputType
+ */
+
+export type DevelopmentCountOutputType = {
+  allocatedTo: number
+}
+
+export type DevelopmentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  allocatedTo?: boolean | DevelopmentCountOutputTypeCountAllocatedToArgs
+}
+
+/**
+ * DevelopmentCountOutputType without action
+ */
+export type DevelopmentCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DevelopmentCountOutputType
+   */
+  select?: Prisma.DevelopmentCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * DevelopmentCountOutputType without action
+ */
+export type DevelopmentCountOutputTypeCountAllocatedToArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DevelopmentWhereInput
+}
 
 
 export type DevelopmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1004,11 +1368,15 @@ export type DevelopmentSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   comments?: boolean
   inactive?: boolean
   allocated?: boolean
+  allocatedFromId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
   system?: boolean | Prisma.SystemDefaultArgs<ExtArgs>
   type?: boolean | Prisma.DevelopmentTypeDefaultArgs<ExtArgs>
+  allocatedFrom?: boolean | Prisma.Development$allocatedFromArgs<ExtArgs>
+  allocatedTo?: boolean | Prisma.Development$allocatedToArgs<ExtArgs>
+  _count?: boolean | Prisma.DevelopmentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["development"]>
 
 export type DevelopmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1023,11 +1391,13 @@ export type DevelopmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   comments?: boolean
   inactive?: boolean
   allocated?: boolean
+  allocatedFromId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
   system?: boolean | Prisma.SystemDefaultArgs<ExtArgs>
   type?: boolean | Prisma.DevelopmentTypeDefaultArgs<ExtArgs>
+  allocatedFrom?: boolean | Prisma.Development$allocatedFromArgs<ExtArgs>
 }, ExtArgs["result"]["development"]>
 
 export type DevelopmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1042,11 +1412,13 @@ export type DevelopmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   comments?: boolean
   inactive?: boolean
   allocated?: boolean
+  allocatedFromId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
   system?: boolean | Prisma.SystemDefaultArgs<ExtArgs>
   type?: boolean | Prisma.DevelopmentTypeDefaultArgs<ExtArgs>
+  allocatedFrom?: boolean | Prisma.Development$allocatedFromArgs<ExtArgs>
 }, ExtArgs["result"]["development"]>
 
 export type DevelopmentSelectScalar = {
@@ -1061,25 +1433,31 @@ export type DevelopmentSelectScalar = {
   comments?: boolean
   inactive?: boolean
   allocated?: boolean
+  allocatedFromId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DevelopmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "moduleId" | "systemId" | "typeId" | "code" | "number" | "package" | "run" | "comments" | "inactive" | "allocated" | "createdAt" | "updatedAt", ExtArgs["result"]["development"]>
+export type DevelopmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "moduleId" | "systemId" | "typeId" | "code" | "number" | "package" | "run" | "comments" | "inactive" | "allocated" | "allocatedFromId" | "createdAt" | "updatedAt", ExtArgs["result"]["development"]>
 export type DevelopmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
   system?: boolean | Prisma.SystemDefaultArgs<ExtArgs>
   type?: boolean | Prisma.DevelopmentTypeDefaultArgs<ExtArgs>
+  allocatedFrom?: boolean | Prisma.Development$allocatedFromArgs<ExtArgs>
+  allocatedTo?: boolean | Prisma.Development$allocatedToArgs<ExtArgs>
+  _count?: boolean | Prisma.DevelopmentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DevelopmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
   system?: boolean | Prisma.SystemDefaultArgs<ExtArgs>
   type?: boolean | Prisma.DevelopmentTypeDefaultArgs<ExtArgs>
+  allocatedFrom?: boolean | Prisma.Development$allocatedFromArgs<ExtArgs>
 }
 export type DevelopmentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
   system?: boolean | Prisma.SystemDefaultArgs<ExtArgs>
   type?: boolean | Prisma.DevelopmentTypeDefaultArgs<ExtArgs>
+  allocatedFrom?: boolean | Prisma.Development$allocatedFromArgs<ExtArgs>
 }
 
 export type $DevelopmentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1088,6 +1466,8 @@ export type $DevelopmentPayload<ExtArgs extends runtime.Types.Extensions.Interna
     module: Prisma.$ModulePayload<ExtArgs>
     system: Prisma.$SystemPayload<ExtArgs>
     type: Prisma.$DevelopmentTypePayload<ExtArgs>
+    allocatedFrom: Prisma.$DevelopmentPayload<ExtArgs> | null
+    allocatedTo: Prisma.$DevelopmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1101,6 +1481,7 @@ export type $DevelopmentPayload<ExtArgs extends runtime.Types.Extensions.Interna
     comments: string
     inactive: boolean
     allocated: boolean
+    allocatedFromId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["development"]>
@@ -1500,6 +1881,8 @@ export interface Prisma__DevelopmentClient<T, Null = never, ExtArgs extends runt
   module<T extends Prisma.ModuleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModuleDefaultArgs<ExtArgs>>): Prisma.Prisma__ModuleClient<runtime.Types.Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   system<T extends Prisma.SystemDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SystemDefaultArgs<ExtArgs>>): Prisma.Prisma__SystemClient<runtime.Types.Result.GetResult<Prisma.$SystemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   type<T extends Prisma.DevelopmentTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DevelopmentTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__DevelopmentTypeClient<runtime.Types.Result.GetResult<Prisma.$DevelopmentTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  allocatedFrom<T extends Prisma.Development$allocatedFromArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Development$allocatedFromArgs<ExtArgs>>): Prisma.Prisma__DevelopmentClient<runtime.Types.Result.GetResult<Prisma.$DevelopmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  allocatedTo<T extends Prisma.Development$allocatedToArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Development$allocatedToArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DevelopmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1540,6 +1923,7 @@ export interface DevelopmentFieldRefs {
   readonly comments: Prisma.FieldRef<"Development", 'String'>
   readonly inactive: Prisma.FieldRef<"Development", 'Boolean'>
   readonly allocated: Prisma.FieldRef<"Development", 'Boolean'>
+  readonly allocatedFromId: Prisma.FieldRef<"Development", 'String'>
   readonly createdAt: Prisma.FieldRef<"Development", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Development", 'DateTime'>
 }
@@ -1940,6 +2324,49 @@ export type DevelopmentDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many Developments to delete.
    */
   limit?: number
+}
+
+/**
+ * Development.allocatedFrom
+ */
+export type Development$allocatedFromArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Development
+   */
+  select?: Prisma.DevelopmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Development
+   */
+  omit?: Prisma.DevelopmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DevelopmentInclude<ExtArgs> | null
+  where?: Prisma.DevelopmentWhereInput
+}
+
+/**
+ * Development.allocatedTo
+ */
+export type Development$allocatedToArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Development
+   */
+  select?: Prisma.DevelopmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Development
+   */
+  omit?: Prisma.DevelopmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DevelopmentInclude<ExtArgs> | null
+  where?: Prisma.DevelopmentWhereInput
+  orderBy?: Prisma.DevelopmentOrderByWithRelationInput | Prisma.DevelopmentOrderByWithRelationInput[]
+  cursor?: Prisma.DevelopmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DevelopmentScalarFieldEnum | Prisma.DevelopmentScalarFieldEnum[]
 }
 
 /**

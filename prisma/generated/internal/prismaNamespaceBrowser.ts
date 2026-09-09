@@ -225,6 +225,7 @@ export const DevelopmentScalarFieldEnum = {
   comments: 'comments',
   inactive: 'inactive',
   allocated: 'allocated',
+  allocatedFromId: 'allocatedFromId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
